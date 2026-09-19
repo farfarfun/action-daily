@@ -3,11 +3,17 @@ name: Mirror to Gitee
 on:
   push:
   schedule:
-    - cron: "17 */2 * * *" # 每 2 小时一次（Asia/Shanghai 各整点+8 后的 17 分）
+    - cron: "17 */2 * * *"  # incremental, every 2 hours (unchanged cadence, off the :00 mark)
+    - cron: "53 19 * * *"   # daily full sync (03:53 Asia/Shanghai) -- re-verifies every repo against Gitee and self-heals any state drift left by an incremental run
   workflow_dispatch:
+    inputs:
+      full:
+        description: 'Force a full sync (ignore the state file for skip decisions)'
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: sync-gitee
@@ -16,33 +22,64 @@ concurrency:
 jobs:
   mirror:
     runs-on: ubuntu-latest
-    # 129+ 个仓库全量 force-push 镜像，个别大仓库（如 fork 来的 chinese-poetry、
-    # funinstall）单仓库重试三次就要吃掉 90 分钟，原来的 30 分钟必然跑不完就被
-    # 平台超时杀掉，每次都以 failure/cancelled 结束。放宽到 180 分钟留够余量。
-    timeout-minutes: 180
+    # 129+ 个仓库全量 force-push 镜像，个别大仓库单仓库重试三次就要吃掉较长时间；
+    # 全量档留够余量，增量档大部分仓库会被 state 文件短路，不需要这么久。
+    timeout-minutes: ${{ github.event.schedule == '53 19 * * *' && 180 || 60 }}
     steps:
-      - name: Mirror farfarfun public repositories to Gitee
-        # Pinned to a commit SHA, not @master: this third-party action handles
-        # the Gitee SSH private key and token, so a compromised upstream
-        # branch could exfiltrate both credentials on the next run.
-        # SHA corresponds to v1.5 (same version farfarfun/fundeploy pins to).
-        uses: Yikun/hub-mirror-action@ec47170fa9d126a4bee5a1ab9359845bb1395248 # v1.5
+      - uses: actions/checkout@v4
+
+      - name: List farfarfun's public repos, excluding the huge chinese-poetry fork
+        id: repos
         env:
-          # 这个 action 容器内 Python 的 stdout 默认是全缓冲的（非 tty），日志
-          # 会攒很久才一次性吐出来，看起来像卡住，实际可能只是在正常处理但
-          # 看不到进度。设成无缓冲方便判断是真卡死还是只是没刷新。
+          GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # chinese-poetry 是 fork 来的第三方数据集（~237MB，非 farfarfun 原创
+          # 内容），push 到 Gitee 经常单次超时，直接排除。
+          # 用带 token 的 orgs/.../repos?type=public 而不是匿名 API：匿名 60
+          # 次/小时的额度对 129+ 个仓库的逐仓库校验远远不够；type=public 保证
+          # 即使 token 能看到私有仓库，也不会被列进来同步到 Gitee。
+          names=$(gh api "orgs/farfarfun/repos" -f type=public --paginate --jq '.[].name' \
+            | grep -vx 'chinese-poetry' | paste -sd, -)
+          echo "repo-names=$names" >> "$GITHUB_OUTPUT"
+
+      - name: Decide incremental vs full sync
+        id: mode
+        run: |
+          full="${{ github.event.schedule == '53 19 * * *' || inputs.full == true }}"
+          if [[ "$full" == "true" ]]; then
+            echo "incremental=false" >> "$GITHUB_OUTPUT"
+            echo "workers=2" >> "$GITHUB_OUTPUT"
+          else
+            echo "incremental=true" >> "$GITHUB_OUTPUT"
+            echo "workers=8" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Mirror farfarfun public repositories to Gitee
+        if: always() && steps.repos.outputs.repo-names != ''
+        uses: farfarfun-action/mirror-repo@v1
+        env:
           PYTHONUNBUFFERED: "1"
         with:
           src: github/farfarfun
           dst: gitee/farfarfun
+          src_token: ${{ secrets.ACTION_GITHUB_TOKEN }}
           dst_key: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          account_type: org
-          force_update: true
-          # chinese-poetry 是 fork 来的第三方数据集（~237MB，非 farfarfun 原创
-          # 内容），push 到 Gitee 经常单次超时、重试 3 次仍失败，白白拖慢整个
-          # job 且不产出有价值的镜像，直接排除。
-          black_list: chinese-poetry
-          # 这个 action 没有 src_token 这个输入（已核对 action.yml/README），
-          # 没有任何凭证时列仓库只能走匿名 API，因此天然只能看到公开仓库，
-          # 私有仓库不会被同步到 Gitee。
+          repo-names: ${{ steps.repos.outputs.repo-names }}
+          state-file: .mirror-state/gitee.json
+          incremental: ${{ steps.mode.outputs.incremental }}
+          workers: ${{ steps.mode.outputs.workers }}
+
+      # Committed to this repo so it survives across runs (runners are
+      # ephemeral); "[skip ci]" stops this from re-triggering the `on: push`
+      # trigger above.
+      - name: Persist mirror state
+        if: always()
+        run: |
+          [[ -f .mirror-state/gitee.json ]] || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .mirror-state/gitee.json
+          git diff --cached --quiet || git commit -m 'chore: update Gitee mirror state [skip ci]'
+          git push
