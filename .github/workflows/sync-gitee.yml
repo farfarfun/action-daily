@@ -82,4 +82,16 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add .mirror-state/gitee.json
           git diff --cached --quiet || git commit -m 'chore: update Gitee mirror state [skip ci]'
-          git push
+
+          # github.sha (and thus this checkout) is resolved at trigger time,
+          # not run-start time, so an overlapping run can leave main ahead of
+          # what we checked out even after the concurrency group serializes
+          # execution. The state file is regenerated fresh each run rather
+          # than diff-applied, so preferring "ours" on conflict is safe --
+          # any staleness self-heals on the next full sync.
+          for i in 1 2 3 4 5; do
+            git push && break
+            [[ $i -eq 5 ]] && exit 1
+            git fetch origin main
+            git rebase -X ours origin/main
+          done
