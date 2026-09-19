@@ -39,7 +39,7 @@ jobs:
           # 用带 token 的 orgs/.../repos?type=public 而不是匿名 API：匿名 60
           # 次/小时的额度对 129+ 个仓库的逐仓库校验远远不够；type=public 保证
           # 即使 token 能看到私有仓库，也不会被列进来同步到 Gitee。
-          names=$(gh api "orgs/farfarfun/repos" -f type=public --paginate --jq '.[].name' \
+          names=$(gh api "orgs/farfarfun/repos" --method GET -f type=public --paginate --jq '.[].name' \
             | grep -vx 'chinese-poetry' | paste -sd, -)
           echo "repo-names=$names" >> "$GITHUB_OUTPUT"
 
