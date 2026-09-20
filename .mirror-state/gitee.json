@@ -141,8 +141,8 @@
       "src_sha": "021ece9566cb5618dcad37f97b2f61fd74700984"
     },
     "action-daily": {
-      "dst_sha": "738c69c215b074d2eff878acdb0f64280f98abd7",
-      "src_sha": "738c69c215b074d2eff878acdb0f64280f98abd7"
+      "dst_sha": "05773035fec86e01e3281a5688177ab19e029f12",
+      "src_sha": "05773035fec86e01e3281a5688177ab19e029f12"
     },
     "cachedata": {
       "dst_sha": "17f45926c3d3332301843d6a644e9d9f109d81b1",
@@ -277,8 +277,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "a7828360303e2f76e0ab056d642133dbcfae2063",
-      "src_sha": "a7828360303e2f76e0ab056d642133dbcfae2063"
+      "dst_sha": "b25003a6f0d6f27d4cd18017d765c1219150c7d4",
+      "src_sha": "b25003a6f0d6f27d4cd18017d765c1219150c7d4"
     },
     "fundev-api": {
       "dst_sha": "445123d8790397cdc2d74b7eb64ff5af664804b8",
