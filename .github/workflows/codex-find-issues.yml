@@ -40,6 +40,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: clone Python 开发规范
+        uses: actions/checkout@v4
+        with:
+          repository: farfarfun-skill/lang-spec-hub
+          path: lang-spec-hub
+
       - name: clone todo-list（SPEC.md / mapping.json 来源）
         uses: actions/checkout@v4
         with:
@@ -82,6 +88,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
           TODO_LIST_DIR: ${{ github.workspace }}/todo-list-ref
+          PYTHON_STANDARDS_PATH: ${{ github.workspace }}/lang-spec-hub/skills/python-development-standards/SKILL.md
           # 克隆目标是组织内任意仓库（含私有），不是 workflow 所在仓库，
           # 复用已有的 org 级 ACTION_GITHUB_TOKEN
           ORG_PAT: ${{ secrets.ACTION_GITHUB_TOKEN }}
