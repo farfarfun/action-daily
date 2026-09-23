@@ -141,8 +141,8 @@
       "src_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e"
     },
     "action-daily": {
-      "dst_sha": "21e8438b1c745457f8caa979beb53c7f83d80a72",
-      "src_sha": "21e8438b1c745457f8caa979beb53c7f83d80a72"
+      "dst_sha": "4d1edb081b2e8856c0aed43a0c25c34bcde66d91",
+      "src_sha": "4d1edb081b2e8856c0aed43a0c25c34bcde66d91"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -153,8 +153,8 @@
       "src_sha": "2fb2167831993c60d2eb6de48ca3fe8d9e9aa406"
     },
     "farcache": {
-      "dst_sha": "d0fb92afdc8293661289005d8836c45cf5b31323",
-      "src_sha": "d0fb92afdc8293661289005d8836c45cf5b31323"
+      "dst_sha": "85b14dd94286576755f91614cbed5e8388643408",
+      "src_sha": "85b14dd94286576755f91614cbed5e8388643408"
     },
     "farcode": {
       "dst_sha": "ae173fd4b88692871adb2054fce55776d70bde0f",
@@ -225,8 +225,8 @@
       "src_sha": "a210951c6cfcc75af92279aac85c88339ad814f1"
     },
     "funbuild": {
-      "dst_sha": "456dc929cac0c83760fdff7f4af69e34f99d9d45",
-      "src_sha": "456dc929cac0c83760fdff7f4af69e34f99d9d45"
+      "dst_sha": "79842680e61e9f8a5ba6e8a5d8a11cea65f022ea",
+      "src_sha": "79842680e61e9f8a5ba6e8a5d8a11cea65f022ea"
     },
     "funchallenge": {
       "dst_sha": "78e7dd66294c14586477c1c021d2548d0423f9ef",
@@ -281,8 +281,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "974829ecf34503a8f3f82bc94f4623825ea530ab",
-      "src_sha": "974829ecf34503a8f3f82bc94f4623825ea530ab"
+      "dst_sha": "2c640a87b0d1fc6ad305ac4c583770c4a45da58a",
+      "src_sha": "2c640a87b0d1fc6ad305ac4c583770c4a45da58a"
     },
     "fundev-api": {
       "dst_sha": "af78029f768d978e31abc18de9bf87ba1acb16a2",
