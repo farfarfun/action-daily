@@ -141,8 +141,8 @@
       "src_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e"
     },
     "action-daily": {
-      "dst_sha": "71c21fe79666c2a44af1b562eec889ab4c87e1e6",
-      "src_sha": "71c21fe79666c2a44af1b562eec889ab4c87e1e6"
+      "dst_sha": "91bc79543a98ef1b2b36e33aca20f395419c1b09",
+      "src_sha": "91bc79543a98ef1b2b36e33aca20f395419c1b09"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -169,8 +169,8 @@
       "src_sha": "3d91069946d4f4ec133fdbecd0735c7a0080c444"
     },
     "farlog": {
-      "dst_sha": "5569bc94f4d5d2ec28b7134906c8659fdbaf4278",
-      "src_sha": "5569bc94f4d5d2ec28b7134906c8659fdbaf4278"
+      "dst_sha": "42fc46b6a6fab721ed34149037121157561b63df",
+      "src_sha": "42fc46b6a6fab721ed34149037121157561b63df"
     },
     "farspec": {
       "dst_sha": "c2d5a8b401e8e7dc044ab84f670569982987afe3",
