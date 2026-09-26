@@ -52,7 +52,8 @@ jobs:
             echo "workers=2" >> "$GITHUB_OUTPUT"
           else
             echo "incremental=true" >> "$GITHUB_OUTPUT"
-            echo "workers=8" >> "$GITHUB_OUTPUT"
+            # Gitee API 在 8 路并发时偶发整仓库请求超时；降低并发换稳定性。
+            echo "workers=4" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Mirror farfarfun public repositories to Gitee
