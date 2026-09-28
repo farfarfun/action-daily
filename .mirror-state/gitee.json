@@ -141,8 +141,8 @@
       "src_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e"
     },
     "action-daily": {
-      "dst_sha": "7fde6d90d3df6fe51af5bf317ea423b828e9ddfb",
-      "src_sha": "7fde6d90d3df6fe51af5bf317ea423b828e9ddfb"
+      "dst_sha": "06f287a2c8410d57349043e168c14203894d51b6",
+      "src_sha": "06f287a2c8410d57349043e168c14203894d51b6"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -541,8 +541,8 @@
       "src_sha": "b3f1b1c1904cbb6378a889857cc89e2252238450"
     },
     "funpub": {
-      "dst_sha": "549f597c4d03c7456e006f1c7ef43ffc1df0caa0",
-      "src_sha": "549f597c4d03c7456e006f1c7ef43ffc1df0caa0"
+      "dst_sha": "0e038a973c70435a2c5f72997f0ab658edb8a2b4",
+      "src_sha": "0e038a973c70435a2c5f72997f0ab658edb8a2b4"
     },
     "funpush": {
       "dst_sha": "0ab4e9de49b86d96d10b408bf7bbb0143853d7db",
