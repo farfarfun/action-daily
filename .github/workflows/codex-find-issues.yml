@@ -10,8 +10,8 @@ name: Codex 规范审计（找问题）
 # SPEC.md、mapping.json 只存在于 todo-list，所以每次运行先把 todo-list clone
 # 到 todo-list-ref/ 供脚本读取。
 #
-# 只负责"找问题"，不改任何目标仓库的代码——修复由 claude-fix-issues.yml 负责，
-# 目前那个 workflow 还没启用自动触发，需要先观察这个 workflow 跑几轮再打开。
+# 只负责"找问题"，不改任何目标仓库的代码——修复由自动修复 workflow 负责，
+# 修复 workflow 会按自己的定时任务批量处理 issue。
 
 on:
   workflow_dispatch:
@@ -21,8 +21,8 @@ on:
         required: false
         default: ""
   schedule:
-    # 每天 03:13 UTC，避开整点/半点
-    - cron: "13 3 * * *"
+    # 每 5 小时运行一次（UTC 的 00/05/10/15/20 点）
+    - cron: "13 */5 * * *"
 
 permissions:
   contents: write

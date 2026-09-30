@@ -1,0 +1,156 @@
+name: Codex 自动修复（codex-audit 发现）
+
+# 读一条 codex-find-issues.yml 在 farfarfun/todo-list 建的 issue，clone 目标
+# 仓库，用 Codex CLI 尝试修复，直接提交到目标仓库默认分支。
+#
+# 这条流水线本身跑在 daily-action，但 issue 在 todo-list、要修的代码在组织内
+# 其它任意仓库，跟 workflow 所在仓库都不是同一个，所以下面的 gh 操作统一用
+# org 级 ACTION_GITHUB_TOKEN，而不是默认 GITHUB_TOKEN。
+#
+# 每 5 小时取 farfarfun/todo-list 中最旧的 30 条 open codex-audit issue，
+# 并行尝试修复；不接 issues 事件，因为 issue 在另一个仓库。
+
+on:
+  schedule:
+    - cron: "37 */5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    outputs:
+      issue_numbers: ${{ steps.issues.outputs.issue_numbers }}
+    env:
+      GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+    steps:
+      - name: 选择最旧的 30 个 issue
+        id: issues
+        run: |
+          NUMBERS=$(gh issue list --repo farfarfun/todo-list \
+            --label codex-audit --state open --limit 100 \
+            --json number,createdAt \
+            --jq 'sort_by(.createdAt) | map(.number) | .[:30] | @json')
+          echo "issue_numbers=$NUMBERS" >> "$GITHUB_OUTPUT"
+          echo "本轮修复 issue：$NUMBERS"
+
+  fix:
+    needs: select
+    if: ${{ needs.select.outputs.issue_numbers != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        issue_number: ${{ fromJSON(needs.select.outputs.issue_numbers) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      # 全流程的 gh 操作目标都是 farfarfun/todo-list 或组织内其它仓库，
+      # 跟 workflow 所在的 daily-action 不是同一个仓库，默认 GITHUB_TOKEN
+      # 权限范围到不了，复用已有的 org 级 ACTION_GITHUB_TOKEN
+      GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+    steps:
+      - name: 读 issue 标题与正文
+        id: fetch
+        run: |
+          gh issue view "${{ matrix.issue_number }}" --repo farfarfun/todo-list \
+            --json title,body,labels -q '.' > issue.json
+          TITLE=$(python3 -c "import json;print(json.load(open('issue.json'))['title'])")
+          LABELS=$(python3 -c "import json;print(','.join(l['name'] for l in json.load(open('issue.json'))['labels']))")
+          if [[ "$LABELS" != *codex-audit* ]]; then
+            echo "issue #${{ matrix.issue_number }} 没有 codex-audit 标签，跳过" >&2
+            exit 1
+          fi
+          REPO_NAME=$(python3 -c "
+          import re
+          title = open('issue.json').read()
+          import json
+          t = json.loads(title)['title']
+          m = re.match(r'^\[codex审计\] ([^:]+):', t)
+          print(m.group(1) if m else '')
+          ")
+          if [ -z "$REPO_NAME" ]; then
+            echo "无法从标题解析目标仓库名: $TITLE" >&2
+            exit 1
+          fi
+          echo "repo_name=$REPO_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: clone 目标仓库
+        env:
+          # 复用已有的 org 级 ACTION_GITHUB_TOKEN，不单独新建 ORG_PAT
+          ORG_PAT: ${{ secrets.ACTION_GITHUB_TOKEN }}
+          TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${ORG_PAT}@github.com/farfarfun/${TARGET_REPO}.git" target
+
+      - name: 安装 Codex CLI
+        run: npm install -g @openai/codex
+
+      - name: 用 Codex 修复
+        working-directory: target
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          ISSUE_BODY_FILE: ${{ github.workspace }}/issue.json
+        run: |
+          ISSUE_BODY=$(python3 -c "import json;print(json.load(open('$ISSUE_BODY_FILE'))['body'])")
+          PROMPT="以下是一条自动合规审计发现的问题，正文可能包含 LLM 误判：动手前先自行判断证据是否
+          站得住，如果判断是误报，不要改代码，直接结束、不要提交任何改动。只修复明确成立的问题，改动
+          范围保持最小，不要顺手做无关重构。改完后不要自己 commit/push，由后续步骤统一处理。
+
+          $ISSUE_BODY"
+          export CODEX_API_KEY="$OPENAI_API_KEY"
+          if [ -n "$OPENAI_BASE_URL" ]; then
+            CODEX_HOME_DIR="$RUNNER_TEMP/codex-home"
+            mkdir -p "$CODEX_HOME_DIR"
+            printf '%s\n' \
+              'model_provider = "custom"' \
+              '' \
+              '[model_providers.custom]' \
+              'name = "custom"' \
+              "base_url = $(python3 -c 'import os; print(repr(os.environ["OPENAI_BASE_URL"]))')" \
+              'wire_api = "responses"' \
+              'env_key = "CODEX_API_KEY"' \
+              'requires_openai_auth = false' \
+              > "$CODEX_HOME_DIR/config.toml"
+            export CODEX_HOME="$CODEX_HOME_DIR"
+          fi
+          codex exec \
+            --sandbox danger-full-access \
+            --skip-git-repo-check \
+            -m gpt-5.6-luna \
+            "$PROMPT"
+
+      - name: 提交到默认分支
+        id: commit
+        working-directory: target
+        env:
+          ISSUE_NUMBER: ${{ matrix.issue_number }}
+        run: |
+          git config user.name "farfarfun-bot"
+          git config user.email "farfarfun@qq.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "没有改动（判断是误报，或 Codex 未能修复），跳过提交"
+            exit 0
+          fi
+          git commit -m "fix: 修复 codex 审计发现的问题（来自 farfarfun/todo-list#${ISSUE_NUMBER}）"
+          git push origin HEAD
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: 关闭已修复 issue
+        if: ${{ steps.commit.outputs.committed == 'true' }}
+        env:
+          ISSUE_NUMBER: ${{ matrix.issue_number }}
+          TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
+          COMMIT_SHA: ${{ steps.commit.outputs.commit_sha }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo farfarfun/todo-list \
+            --body "Codex 已直接提交到 ${TARGET_REPO} 的默认分支，commit：${COMMIT_SHA}"
+          gh issue edit "$ISSUE_NUMBER" --repo farfarfun/todo-list \
+            --add-label fix-applied --remove-label codex-audit
+          gh issue close "$ISSUE_NUMBER" --repo farfarfun/todo-list
