@@ -141,8 +141,8 @@
       "src_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e"
     },
     "action-daily": {
-      "dst_sha": "d6c6f9d3947429adb29cfcee135512bbb681a28e",
-      "src_sha": "d6c6f9d3947429adb29cfcee135512bbb681a28e"
+      "dst_sha": "b5c2760be3ad4685e7be60113409ca897417e945",
+      "src_sha": "b5c2760be3ad4685e7be60113409ca897417e945"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -473,16 +473,16 @@
       "src_sha": "9759f0798998d1a69fcb7d4c73c02bce71755aba"
     },
     "funmill-api": {
-      "dst_sha": "07c6a588abd217da7c44c243f0d353ef3dbd0ae8",
-      "src_sha": "07c6a588abd217da7c44c243f0d353ef3dbd0ae8"
+      "dst_sha": "7d9323d9b8299cafeb9a8381aa3b746b55c51473",
+      "src_sha": "7d9323d9b8299cafeb9a8381aa3b746b55c51473"
     },
     "funmill-dev": {
-      "dst_sha": "994f4dda236ada9d6482c21251ea15036f6657cd",
-      "src_sha": "994f4dda236ada9d6482c21251ea15036f6657cd"
+      "dst_sha": "d4c74702d47368ed7aca41f63c15c05f4923d711",
+      "src_sha": "d4c74702d47368ed7aca41f63c15c05f4923d711"
     },
     "funmill-sdk": {
-      "dst_sha": "cb469e32067ab2f60e6df8c032443f5951a28cfa",
-      "src_sha": "cb469e32067ab2f60e6df8c032443f5951a28cfa"
+      "dst_sha": "bb619a3ec22e75b5c10ea49ed2d4472660da384a",
+      "src_sha": "bb619a3ec22e75b5c10ea49ed2d4472660da384a"
     },
     "funmind": {
       "dst_sha": "78b69b99c1efe0a4848a9a63c34447e6186f6923",
@@ -533,24 +533,24 @@
       "src_sha": "a93aa595d626f49ab3742ab9c8b999cd55b51451"
     },
     "funpromotion": {
-      "dst_sha": "462b3868a927f06f5481513f5b6d5bd8896b21f8",
-      "src_sha": "462b3868a927f06f5481513f5b6d5bd8896b21f8"
+      "dst_sha": "2aee6009d75623cdf670a5caf78cf07510659e46",
+      "src_sha": "2aee6009d75623cdf670a5caf78cf07510659e46"
     },
     "funproxy": {
-      "dst_sha": "b3f1b1c1904cbb6378a889857cc89e2252238450",
-      "src_sha": "b3f1b1c1904cbb6378a889857cc89e2252238450"
+      "dst_sha": "0945c680114106f8b618b1377f561b60864d4a53",
+      "src_sha": "0945c680114106f8b618b1377f561b60864d4a53"
     },
     "funpub": {
-      "dst_sha": "0e038a973c70435a2c5f72997f0ab658edb8a2b4",
-      "src_sha": "0e038a973c70435a2c5f72997f0ab658edb8a2b4"
+      "dst_sha": "e4552b0b369ff799f75bc69491a80c7e3f82145c",
+      "src_sha": "e4552b0b369ff799f75bc69491a80c7e3f82145c"
     },
     "funpush": {
-      "dst_sha": "0ab4e9de49b86d96d10b408bf7bbb0143853d7db",
-      "src_sha": "0ab4e9de49b86d96d10b408bf7bbb0143853d7db"
+      "dst_sha": "709f9e7812d7064ce3aa3cb8d7c6b168f2081975",
+      "src_sha": "709f9e7812d7064ce3aa3cb8d7c6b168f2081975"
     },
     "funpypi": {
-      "dst_sha": "e7ce3a65451c053c6b0d08feac5104a767baf6a3",
-      "src_sha": "e7ce3a65451c053c6b0d08feac5104a767baf6a3"
+      "dst_sha": "b7bec32ce0c5a52ce0e0843042abb61f5bd7c95d",
+      "src_sha": "b7bec32ce0c5a52ce0e0843042abb61f5bd7c95d"
     },
     "funquery": {
       "dst_sha": "ca580c6f20ea3c30c0ccee544437b8af2390aa34",
