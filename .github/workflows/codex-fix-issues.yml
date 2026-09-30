@@ -8,7 +8,7 @@ name: Codex 自动修复（codex-audit 发现）
 # org 级 ACTION_GITHUB_TOKEN，而不是默认 GITHUB_TOKEN。
 #
 # 每 5 小时取 farfarfun/todo-list 中最旧的 30 条 open codex-audit issue，
-# 并行尝试修复；不接 issues 事件，因为 issue 在另一个仓库。
+# 串行逐条修复并立即关闭，再处理下一条；不接 issues 事件，因为 issue 在另一个仓库。
 
 on:
   schedule:
@@ -42,6 +42,7 @@ jobs:
     if: ${{ needs.select.outputs.issue_numbers != '[]' }}
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         issue_number: ${{ fromJSON(needs.select.outputs.issue_numbers) }}
     runs-on: ubuntu-latest
@@ -120,7 +121,7 @@ jobs:
           codex exec \
             --sandbox danger-full-access \
             --skip-git-repo-check \
-            -m gpt-5.6-luna \
+            -m gpt-5.6-sol \
             "$PROMPT"
 
       - name: 提交到默认分支
