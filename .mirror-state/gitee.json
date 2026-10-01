@@ -141,8 +141,8 @@
       "src_sha": "d4acb6000562028a7d544036607fde43c732bf7c"
     },
     "action-daily": {
-      "dst_sha": "1e26e36578c51ad4081314a09c4ebb450c92a18a",
-      "src_sha": "1e26e36578c51ad4081314a09c4ebb450c92a18a"
+      "dst_sha": "8d460a8d7c43bc9604fd0a29869def18fd0727ce",
+      "src_sha": "8d460a8d7c43bc9604fd0a29869def18fd0727ce"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -261,8 +261,8 @@
       "src_sha": "ddef7b7fb1cef98dbbe3867927f5ea8d22cd4523"
     },
     "funcron": {
-      "dst_sha": "116785e3a9257462d614c5378e9ae90dace192f8",
-      "src_sha": "116785e3a9257462d614c5378e9ae90dace192f8"
+      "dst_sha": "59d342064e2f093d3766e051b08f2641f9f40044",
+      "src_sha": "59d342064e2f093d3766e051b08f2641f9f40044"
     },
     "fundaily": {
       "dst_sha": "31782d2b0c6367a2977794612b862e5be713070c",
