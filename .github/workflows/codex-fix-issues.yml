@@ -7,7 +7,7 @@ name: Codex 自动修复（codex-audit 发现）
 # 其它任意仓库，跟 workflow 所在仓库都不是同一个，所以下面的 gh 操作统一用
 # org 级 ACTION_GITHUB_TOKEN，而不是默认 GITHUB_TOKEN。
 #
-# 每小时取 farfarfun/todo-list 中最旧的 5 条 open codex-audit issue，
+# 每小时取 farfarfun/todo-list 中最旧的 10 条 open codex-audit issue，
 # 串行逐条修复并立即关闭，再处理下一条；不接 issues 事件，因为 issue 在另一个仓库。
 
 on:
@@ -27,13 +27,13 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
     steps:
-      - name: 选择最旧的 5 个 issue
+      - name: 选择最旧的 10 个 issue
         id: issues
         run: |
           NUMBERS=$(gh issue list --repo farfarfun/todo-list \
             --label codex-audit --state open --limit 100 \
             --json number,createdAt \
-            --jq 'sort_by(.createdAt) | map(.number) | .[:5] | @json')
+            --jq 'sort_by(.createdAt) | map(.number) | .[:10] | @json')
           echo "issue_numbers=$NUMBERS" >> "$GITHUB_OUTPUT"
           echo "本轮修复 issue：$NUMBERS"
 
