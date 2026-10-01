@@ -137,12 +137,12 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e",
-      "src_sha": "d4fcb834e89c71071fa69670093402e6c4d01b1e"
+      "dst_sha": "d4acb6000562028a7d544036607fde43c732bf7c",
+      "src_sha": "d4acb6000562028a7d544036607fde43c732bf7c"
     },
     "action-daily": {
-      "dst_sha": "c2b0ed7a15365da76b678a8e3c1d6e7239f23b0b",
-      "src_sha": "c2b0ed7a15365da76b678a8e3c1d6e7239f23b0b"
+      "dst_sha": "234e716deb08b6536fc4765127d233bd4bfed358",
+      "src_sha": "234e716deb08b6536fc4765127d233bd4bfed358"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -153,8 +153,8 @@
       "src_sha": "2fb2167831993c60d2eb6de48ca3fe8d9e9aa406"
     },
     "farcache": {
-      "dst_sha": "85b14dd94286576755f91614cbed5e8388643408",
-      "src_sha": "85b14dd94286576755f91614cbed5e8388643408"
+      "dst_sha": "e9f08024c53afa501f07aea3bc133b1e270ddd61",
+      "src_sha": "e9f08024c53afa501f07aea3bc133b1e270ddd61"
     },
     "farcode": {
       "dst_sha": "ae173fd4b88692871adb2054fce55776d70bde0f",
@@ -165,8 +165,8 @@
       "src_sha": "6cc7013ed374273aa38397936540748c313eff80"
     },
     "farfarfun": {
-      "dst_sha": "3d91069946d4f4ec133fdbecd0735c7a0080c444",
-      "src_sha": "3d91069946d4f4ec133fdbecd0735c7a0080c444"
+      "dst_sha": "eefdaf7b010ea37fc2f27b1888b464904e1ed456",
+      "src_sha": "eefdaf7b010ea37fc2f27b1888b464904e1ed456"
     },
     "farlog": {
       "dst_sha": "42fc46b6a6fab721ed34149037121157561b63df",
@@ -413,20 +413,20 @@
       "src_sha": "cf58f954581cfcf5ca1f899a04dc58387a52bdf2"
     },
     "funkaggle": {
-      "dst_sha": "ba0858efeebdd57647d5850e4c2598f519472470",
-      "src_sha": "ba0858efeebdd57647d5850e4c2598f519472470"
+      "dst_sha": "10b2ab0a1aff328e4975fa03f343df4a5a69ff26",
+      "src_sha": "10b2ab0a1aff328e4975fa03f343df4a5a69ff26"
     },
     "funkeras": {
-      "dst_sha": "73e526960e7f45d064c27dac6bc82f57f1d5f7c7",
-      "src_sha": "73e526960e7f45d064c27dac6bc82f57f1d5f7c7"
+      "dst_sha": "41a256b5312d7a91373a3e6c8dc2abfcaa7fff15",
+      "src_sha": "41a256b5312d7a91373a3e6c8dc2abfcaa7fff15"
     },
     "funlanzou": {
-      "dst_sha": "c769e8a9449c3243a0598e597dfdae69cac254b2",
-      "src_sha": "c769e8a9449c3243a0598e597dfdae69cac254b2"
+      "dst_sha": "b41b84ca512a73afb8b2856bc8491068fe926f44",
+      "src_sha": "b41b84ca512a73afb8b2856bc8491068fe926f44"
     },
     "funlbm": {
-      "dst_sha": "cc28b6e8e52be1aa5b81b189558d60ff7cd2b026",
-      "src_sha": "cc28b6e8e52be1aa5b81b189558d60ff7cd2b026"
+      "dst_sha": "617faee4d98b53ed3775252ea68fbe60826229df",
+      "src_sha": "617faee4d98b53ed3775252ea68fbe60826229df"
     },
     "funlesson": {
       "dst_sha": "8ccac5a2de48ac9dc65862a50010888c0e249740",
@@ -473,56 +473,56 @@
       "src_sha": "9759f0798998d1a69fcb7d4c73c02bce71755aba"
     },
     "funmill-api": {
-      "dst_sha": "e5acda422f974a2cdb22cbb87b06f5bcd1c920a0",
-      "src_sha": "e5acda422f974a2cdb22cbb87b06f5bcd1c920a0"
+      "dst_sha": "039ad5e209e1dd16165e66c6007deb06e4a4700a",
+      "src_sha": "039ad5e209e1dd16165e66c6007deb06e4a4700a"
     },
     "funmill-dev": {
-      "dst_sha": "cab2dedabef08172bbcbdd5319cdf5f4734fc04c",
-      "src_sha": "cab2dedabef08172bbcbdd5319cdf5f4734fc04c"
+      "dst_sha": "31d31b1b7d282b13c3a3d9747c41cac43dea3db8",
+      "src_sha": "31d31b1b7d282b13c3a3d9747c41cac43dea3db8"
     },
     "funmill-sdk": {
-      "dst_sha": "fa1f6495dcfeb3b2cf85239501107f6c07d0bbeb",
-      "src_sha": "fa1f6495dcfeb3b2cf85239501107f6c07d0bbeb"
+      "dst_sha": "fec2f3f54661974cf3be94695e728ddf46e893b7",
+      "src_sha": "fec2f3f54661974cf3be94695e728ddf46e893b7"
     },
     "funmind": {
-      "dst_sha": "78b69b99c1efe0a4848a9a63c34447e6186f6923",
-      "src_sha": "78b69b99c1efe0a4848a9a63c34447e6186f6923"
+      "dst_sha": "be33e4559c99a849d75ebd8dcf9746688b6a6811",
+      "src_sha": "be33e4559c99a849d75ebd8dcf9746688b6a6811"
     },
     "funmirror": {
       "dst_sha": "2fc36904a182547f469c183aa44c127f5d9bbd80",
       "src_sha": "2fc36904a182547f469c183aa44c127f5d9bbd80"
     },
     "funmodel": {
-      "dst_sha": "b3c13be8e038bf5ddf631fa5ab8f9fb976e6ea45",
-      "src_sha": "b3c13be8e038bf5ddf631fa5ab8f9fb976e6ea45"
+      "dst_sha": "07965d50768ba5f9ed76a07a6aaddf604361f2b5",
+      "src_sha": "07965d50768ba5f9ed76a07a6aaddf604361f2b5"
     },
     "funmodel-dev": {
       "dst_sha": "69e916bf352fdc7db885895b6f40d227e4c921d5",
       "src_sha": "69e916bf352fdc7db885895b6f40d227e4c921d5"
     },
     "funmodel-dwpose": {
-      "dst_sha": "b5fbbed5b395bdb9d9409ad88d47149ad322658e",
-      "src_sha": "b5fbbed5b395bdb9d9409ad88d47149ad322658e"
+      "dst_sha": "82365d4f0ca5d5527440bd577fa4e96dd5b692a0",
+      "src_sha": "82365d4f0ca5d5527440bd577fa4e96dd5b692a0"
     },
     "funmodel-mivolo": {
-      "dst_sha": "c493fe47983bd093daaeeb8864ebba2be70e7e2e",
-      "src_sha": "c493fe47983bd093daaeeb8864ebba2be70e7e2e"
+      "dst_sha": "06abc995d56e37748e7df99999948be80bcae09a",
+      "src_sha": "06abc995d56e37748e7df99999948be80bcae09a"
     },
     "funmodel2": {
-      "dst_sha": "309c6e4f2af8d5c06853c50fc51df02ecde45324",
-      "src_sha": "309c6e4f2af8d5c06853c50fc51df02ecde45324"
+      "dst_sha": "460c889260d2a43c838502a6696ed5c4202cda06",
+      "src_sha": "460c889260d2a43c838502a6696ed5c4202cda06"
     },
     "funmovie": {
-      "dst_sha": "4fb83b8daf2351d76b517df4527b8055ef416703",
-      "src_sha": "4fb83b8daf2351d76b517df4527b8055ef416703"
+      "dst_sha": "bd6bc8dacf664113d9d40a1b389b15a4df6da8e1",
+      "src_sha": "bd6bc8dacf664113d9d40a1b389b15a4df6da8e1"
     },
     "funnotice": {
       "dst_sha": "5dbdbb50fa4dcbcb3fe6d24919e7184f3c31aa99",
       "src_sha": "5dbdbb50fa4dcbcb3fe6d24919e7184f3c31aa99"
     },
     "funpaper": {
-      "dst_sha": "81ab2a3cde227fb85f088d73aa90bffd6cf57ec6",
-      "src_sha": "81ab2a3cde227fb85f088d73aa90bffd6cf57ec6"
+      "dst_sha": "960a8b316290da5c4a57d85de8d604718b5ef8c8",
+      "src_sha": "960a8b316290da5c4a57d85de8d604718b5ef8c8"
     },
     "funplay": {
       "dst_sha": "3e7cd4ea04d6d6639a894e25ef58347a6ea8691a",
@@ -537,24 +537,24 @@
       "src_sha": "2aee6009d75623cdf670a5caf78cf07510659e46"
     },
     "funproxy": {
-      "dst_sha": "0945c680114106f8b618b1377f561b60864d4a53",
-      "src_sha": "0945c680114106f8b618b1377f561b60864d4a53"
+      "dst_sha": "cf41d5ad5567d5e84a7c61012f1da150e4857c83",
+      "src_sha": "cf41d5ad5567d5e84a7c61012f1da150e4857c83"
     },
     "funpub": {
-      "dst_sha": "e4552b0b369ff799f75bc69491a80c7e3f82145c",
-      "src_sha": "e4552b0b369ff799f75bc69491a80c7e3f82145c"
+      "dst_sha": "41f51751fbcb8b08e05fcb486705bb5e0fe4083f",
+      "src_sha": "41f51751fbcb8b08e05fcb486705bb5e0fe4083f"
     },
     "funpush": {
-      "dst_sha": "709f9e7812d7064ce3aa3cb8d7c6b168f2081975",
-      "src_sha": "709f9e7812d7064ce3aa3cb8d7c6b168f2081975"
+      "dst_sha": "48f44d2325d6c92955c13835764292b0be157c76",
+      "src_sha": "48f44d2325d6c92955c13835764292b0be157c76"
     },
     "funpypi": {
       "dst_sha": "b7bec32ce0c5a52ce0e0843042abb61f5bd7c95d",
       "src_sha": "b7bec32ce0c5a52ce0e0843042abb61f5bd7c95d"
     },
     "funquery": {
-      "dst_sha": "61eadcbe19456a8455bfe76880ce7cf806f2188d",
-      "src_sha": "61eadcbe19456a8455bfe76880ce7cf806f2188d"
+      "dst_sha": "d6492dde2feddbfa92fa7ca4e28fc8032642431c",
+      "src_sha": "d6492dde2feddbfa92fa7ca4e28fc8032642431c"
     },
     "funquiz": {
       "dst_sha": "6acda043230d24cd4e7ede71a2eb0729712e84cb",
@@ -565,8 +565,8 @@
       "src_sha": "2497e9672878d3f2932b7f1fadda46177eb7f3e8"
     },
     "funread": {
-      "dst_sha": "bac0b0607b7c967778506b59f6b952de65c310f3",
-      "src_sha": "bac0b0607b7c967778506b59f6b952de65c310f3"
+      "dst_sha": "c12fc38b57fb9a677929ce9f4fb9654f6048f742",
+      "src_sha": "c12fc38b57fb9a677929ce9f4fb9654f6048f742"
     },
     "funread-api": {
       "dst_sha": "517baf47478518de5d6515725175abb1b14d2488",
@@ -593,8 +593,8 @@
       "src_sha": "4efd63caad0dc83ece669352f6192d1ae2589167"
     },
     "funrun": {
-      "dst_sha": "b64dd024d82f56ca73273eb7c06b842da3bfd51d",
-      "src_sha": "b64dd024d82f56ca73273eb7c06b842da3bfd51d"
+      "dst_sha": "66c011d462c6b9e58ca31d65ee3e2970ac6194d3",
+      "src_sha": "66c011d462c6b9e58ca31d65ee3e2970ac6194d3"
     },
     "funscnet": {
       "dst_sha": "de4e36b05999b02f8b9ae661b2652baa2ce7acb6",
@@ -613,24 +613,24 @@
       "src_sha": "3301c01fc242cc5838d711421ddf6a7b8d60803f"
     },
     "funserver": {
-      "dst_sha": "d25e1e64c44ca702474da798b77ce1597451b3b6",
-      "src_sha": "d25e1e64c44ca702474da798b77ce1597451b3b6"
+      "dst_sha": "e3032d54f195f677a5924343cfbaee18f7ddca5f",
+      "src_sha": "e3032d54f195f677a5924343cfbaee18f7ddca5f"
     },
     "funservice": {
       "dst_sha": "9b3ad3fbe431ed988cd2b3c32915a9cb0d5434a7",
       "src_sha": "9b3ad3fbe431ed988cd2b3c32915a9cb0d5434a7"
     },
     "funshell": {
-      "dst_sha": "231eea202a43cfd99e8a6efd1a6902fe107bb2ad",
-      "src_sha": "231eea202a43cfd99e8a6efd1a6902fe107bb2ad"
+      "dst_sha": "45c727edd3c2cd52695cd3d343592e5122caaa0c",
+      "src_sha": "45c727edd3c2cd52695cd3d343592e5122caaa0c"
     },
     "funsketch": {
-      "dst_sha": "e224243c5b69650c0fb7061c4eaa19de55fe1ea4",
-      "src_sha": "e224243c5b69650c0fb7061c4eaa19de55fe1ea4"
+      "dst_sha": "808a90b06870b44c1f47ca209dc8ff700a56bc13",
+      "src_sha": "808a90b06870b44c1f47ca209dc8ff700a56bc13"
     },
     "funstock": {
-      "dst_sha": "13b4970488c715d14b02a72f5390f148c68792b7",
-      "src_sha": "13b4970488c715d14b02a72f5390f148c68792b7"
+      "dst_sha": "b82c96c7450c461099b79a367259db055ddd9acf",
+      "src_sha": "b82c96c7450c461099b79a367259db055ddd9acf"
     },
     "funtable": {
       "dst_sha": "5ead7d3411b68924974be8468264eaf8e6812ef0",
@@ -713,16 +713,16 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "paper-agent": {
-      "dst_sha": "60b9b62b056c23ca500ae96f7144341639162aac",
-      "src_sha": "60b9b62b056c23ca500ae96f7144341639162aac"
+      "dst_sha": "6b0a6b633f42360c26493a9cbf3d6d7b2407a92a",
+      "src_sha": "6b0a6b633f42360c26493a9cbf3d6d7b2407a92a"
     },
     "readable-python": {
       "dst_sha": "8880bc3f5cb51b200d4abb2620bfd1090590a35e",
       "src_sha": "8880bc3f5cb51b200d4abb2620bfd1090590a35e"
     },
     "skills-deploy-rule": {
-      "dst_sha": "2d56fce81ec944ff9467f94832a331715df17dc9",
-      "src_sha": "2d56fce81ec944ff9467f94832a331715df17dc9"
+      "dst_sha": "a609747c14939496db196e6f93d779cc26d33fd7",
+      "src_sha": "a609747c14939496db196e6f93d779cc26d33fd7"
     },
     "stable-diffusion-webui": {
       "dst_sha": "d84cc6b75806ab2f21da7edb619293ba91909f14",
@@ -733,16 +733,16 @@
       "src_sha": "a0461be940b169d2065e1402582e26dcc334a1bb"
     },
     "utools-funchat": {
-      "dst_sha": "256cd18da407d60da77e9134abdb19c675b03e1f",
-      "src_sha": "256cd18da407d60da77e9134abdb19c675b03e1f"
+      "dst_sha": "ee93ec56392f3f32a9a77eb0ae99ff2e6c730ed2",
+      "src_sha": "ee93ec56392f3f32a9a77eb0ae99ff2e6c730ed2"
     },
     "utools-funlink": {
-      "dst_sha": "3e91233f01cd4d089cf1d9fcd5d856ab10d441c1",
-      "src_sha": "3e91233f01cd4d089cf1d9fcd5d856ab10d441c1"
+      "dst_sha": "9748e0a0b606e6cbc092046fe68371c15623121c",
+      "src_sha": "9748e0a0b606e6cbc092046fe68371c15623121c"
     },
     "utools-funotp": {
-      "dst_sha": "bb3829d7f915aadf7442445a0864f57050738edc",
-      "src_sha": "bb3829d7f915aadf7442445a0864f57050738edc"
+      "dst_sha": "e6e0f038a4cc130df6d8de42ef70d64e0542e963",
+      "src_sha": "e6e0f038a4cc130df6d8de42ef70d64e0542e963"
     },
     "utools-plugins": {
       "dst_sha": "eb98b1c4637c0852e569a96f97311181f8ecad23",
