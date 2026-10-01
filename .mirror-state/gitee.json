@@ -141,8 +141,8 @@
       "src_sha": "d4acb6000562028a7d544036607fde43c732bf7c"
     },
     "action-daily": {
-      "dst_sha": "8d460a8d7c43bc9604fd0a29869def18fd0727ce",
-      "src_sha": "8d460a8d7c43bc9604fd0a29869def18fd0727ce"
+      "dst_sha": "c125d214a3e722d20430ac55f2dff3db5a70428b",
+      "src_sha": "c125d214a3e722d20430ac55f2dff3db5a70428b"
     },
     "cachedata": {
       "dst_sha": "be9f1f0a15301f688c0f016d3278dc58046e5d49",
@@ -173,12 +173,12 @@
       "src_sha": "42fc46b6a6fab721ed34149037121157561b63df"
     },
     "farspec": {
-      "dst_sha": "c2d5a8b401e8e7dc044ab84f670569982987afe3",
-      "src_sha": "c2d5a8b401e8e7dc044ab84f670569982987afe3"
+      "dst_sha": "675529ccb879e18745cdbbc47d39c3365f949237",
+      "src_sha": "675529ccb879e18745cdbbc47d39c3365f949237"
     },
     "fartask": {
-      "dst_sha": "49275ae90e37fdaa097fbf3015f1ed937dcf8e0e",
-      "src_sha": "49275ae90e37fdaa097fbf3015f1ed937dcf8e0e"
+      "dst_sha": "8767950050bad1a59cc7f55bf3bf29a5d46a3301",
+      "src_sha": "8767950050bad1a59cc7f55bf3bf29a5d46a3301"
     },
     "fartts": {
       "dst_sha": "0d39dee78ab2e6237dfdcd456078a5ab7019681c",
@@ -585,8 +585,8 @@
       "src_sha": "072bfe36503affc220cbd977206715c30bb92f78"
     },
     "funrec": {
-      "dst_sha": "7ce11f3e7f7bc9bb233800143bb60cbe43a81ba4",
-      "src_sha": "7ce11f3e7f7bc9bb233800143bb60cbe43a81ba4"
+      "dst_sha": "7948a7d26ec53b7f891dbd2f701118f9f5c383d3",
+      "src_sha": "7948a7d26ec53b7f891dbd2f701118f9f5c383d3"
     },
     "funresource": {
       "dst_sha": "4efd63caad0dc83ece669352f6192d1ae2589167",
