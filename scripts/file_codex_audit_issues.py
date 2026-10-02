@@ -33,7 +33,9 @@ MIN_CONFIDENCE = ("medium", "high")
 
 
 def gh(args, input_text=None):
-    r = subprocess.run(["gh", *args], capture_output=True, text=True, input=input_text)
+    r = subprocess.run(
+        ["gh", *args], capture_output=True, text=True, input=input_text, check=False
+    )
     if r.returncode != 0:
         print(f"  !! 失败: {' '.join(args)}\n{r.stderr}", file=sys.stderr)
         return None
@@ -41,10 +43,22 @@ def gh(args, input_text=None):
 
 
 def has_open_issue(repo_name):
-    out = gh([
-        "issue", "list", "--repo", REPO, "--label", "codex-audit",
-        "--state", "open", "--limit", "500", "--json", "title",
-    ])
+    out = gh(
+        [
+            "issue",
+            "list",
+            "--repo",
+            REPO,
+            "--label",
+            "codex-audit",
+            "--state",
+            "open",
+            "--limit",
+            "500",
+            "--json",
+            "title",
+        ]
+    )
     if not out:
         return False
     prefix = f"{TITLE_PREFIX} {repo_name}:"
@@ -53,12 +67,16 @@ def has_open_issue(repo_name):
 
 def build_body(repo_name, findings, skipped_low):
     lines = [
-        "⚠️ 本 issue 由 Codex CLI 自动生成（org 级合规审计流水线，模型 "
-        "`gpt-5.6-luna`），**不是**人工核对过的发现，可能存在误判。任何自动/"
-        "人工修复合并前请先核实下面的证据是否站得住。",
+        (
+            "⚠️ 本 issue 由 Codex CLI 自动生成（org 级合规审计流水线，模型 "
+            "`gpt-5.6-luna`），**不是**人工核对过的发现，可能存在误判。任何自动/"
+            "人工修复合并前请先核实下面的证据是否站得住。"
+        ),
         "",
-        f"对照 [SPEC.md](https://github.com/farfarfun/todo-list/blob/master/SPEC.md) "
-        f"检查 `{repo_name}` 发现以下问题：",
+        (
+            f"对照 [SPEC.md](https://github.com/farfarfun/todo-list/blob/master/SPEC.md) "
+            f"检查 `{repo_name}` 发现以下问题："
+        ),
         "",
     ]
     for i, f in enumerate(findings, 1):
@@ -78,7 +96,8 @@ def build_body(repo_name, findings, skipped_low):
 
 
 def main():
-    results = json.load(open(FINDINGS_PATH, encoding="utf-8"))
+    with open(FINDINGS_PATH, encoding="utf-8") as fp:
+        results = json.load(fp)
     created = []
     skipped_dup = []
 
@@ -96,10 +115,20 @@ def main():
 
         title = f"{TITLE_PREFIX} {repo_name}: {len(findings)} 条规范违规待核实"
         body = build_body(repo_name, findings, skipped_low)
-        out = gh([
-            "issue", "create", "--repo", REPO, "--title", title,
-            "--body", body, "--label", "codex-audit",
-        ])
+        out = gh(
+            [
+                "issue",
+                "create",
+                "--repo",
+                REPO,
+                "--title",
+                title,
+                "--body",
+                body,
+                "--label",
+                "codex-audit",
+            ]
+        )
         if out:
             url = out.strip()
             created.append({"repo": repo_name, "url": url})
@@ -107,8 +136,11 @@ def main():
         else:
             print(f"  {repo_name} -> 建 issue 失败")
 
-    json.dump(created, open(CREATED_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    print(f"\n完成，新建 {len(created)} 条 issue，因已存在跳过 {len(skipped_dup)} 个仓库")
+    with open(CREATED_PATH, "w", encoding="utf-8") as fp:
+        json.dump(created, fp, ensure_ascii=False, indent=2)
+    print(
+        f"\n完成，新建 {len(created)} 条 issue，因已存在跳过 {len(skipped_dup)} 个仓库"
+    )
 
 
 if __name__ == "__main__":

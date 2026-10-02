@@ -28,7 +28,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = "farfarfun/todo-list"
-TODO_LIST_DIR = os.environ.get("TODO_LIST_DIR", os.path.join(HERE, "..", "todo-list-ref"))
+TODO_LIST_DIR = os.environ.get(
+    "TODO_LIST_DIR", os.path.join(HERE, "..", "todo-list-ref")
+)
 MAPPING_PATH = os.path.join(TODO_LIST_DIR, "scripts", "mapping.json")
 CURSOR_PATH = os.path.join(HERE, "codex_audit_cursor.json")
 BATCH_PATH = os.path.join(HERE, "codex_audit_batch.json")
@@ -36,7 +38,7 @@ TITLE_PREFIX = "[codex审计]"
 
 
 def gh(args):
-    r = subprocess.run(["gh", *args], capture_output=True, text=True)
+    r = subprocess.run(["gh", *args], capture_output=True, text=True, check=False)
     if r.returncode != 0:
         print(f"  !! 失败: {' '.join(args)}\n{r.stderr}", file=sys.stderr)
         return None
@@ -44,29 +46,43 @@ def gh(args):
 
 
 def repos_with_open_issue():
-    out = gh([
-        "issue", "list", "--repo", REPO, "--label", "codex-audit",
-        "--state", "open", "--limit", "500", "--json", "title",
-    ])
+    out = gh(
+        [
+            "issue",
+            "list",
+            "--repo",
+            REPO,
+            "--label",
+            "codex-audit",
+            "--state",
+            "open",
+            "--limit",
+            "500",
+            "--json",
+            "title",
+        ]
+    )
     if not out:
         return set()
     names = set()
     for row in json.loads(out):
         title = row["title"]
         if title.startswith(f"{TITLE_PREFIX} "):
-            rest = title[len(f"{TITLE_PREFIX} "):]
+            rest = title[len(f"{TITLE_PREFIX} ") :]
             names.add(rest.split(":", 1)[0].strip())
     return names
 
 
 def main():
-    repos = json.load(open(MAPPING_PATH, encoding="utf-8"))
+    with open(MAPPING_PATH, encoding="utf-8") as f:
+        repos = json.load(f)
     names = [r["repo"] for r in repos if not r.get("archived")]
     if not names:
         print("mapping.json 里没有可扫描的仓库", file=sys.stderr)
         sys.exit(1)
 
-    cursor = json.load(open(CURSOR_PATH, encoding="utf-8"))
+    with open(CURSOR_PATH, encoding="utf-8") as f:
+        cursor = json.load(f)
     batch_size = cursor.get("batch_size", 15)
     start = (cursor.get("last_index", -1) + 1) % len(names)
 
@@ -86,8 +102,10 @@ def main():
         seen += 1
 
     cursor["last_index"] = last_idx
-    json.dump(cursor, open(CURSOR_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    json.dump(batch, open(BATCH_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    with open(CURSOR_PATH, "w", encoding="utf-8") as f:
+        json.dump(cursor, f, ensure_ascii=False, indent=2)
+    with open(BATCH_PATH, "w", encoding="utf-8") as f:
+        json.dump(batch, f, ensure_ascii=False, indent=2)
 
     print(f"本轮批次（{len(batch)}/{batch_size} 个，游标推进到 {last_idx}）：{batch}")
 

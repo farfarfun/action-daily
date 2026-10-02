@@ -41,7 +41,9 @@ import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ORG = "farfarfun"
-TODO_LIST_DIR = os.environ.get("TODO_LIST_DIR", os.path.join(HERE, "..", "todo-list-ref"))
+TODO_LIST_DIR = os.environ.get(
+    "TODO_LIST_DIR", os.path.join(HERE, "..", "todo-list-ref")
+)
 SPEC_PATH = os.path.join(TODO_LIST_DIR, "SPEC.md")
 PYTHON_STANDARDS_PATH = os.environ.get("PYTHON_STANDARDS_PATH")
 SCHEMA_PATH = os.path.join(HERE, "codex_audit_schema.json")
@@ -77,6 +79,7 @@ def setup_codex_home(base_url):
         f.write(CODEX_CONFIG_TEMPLATE.format(base_url=base_url))
     return codex_home
 
+
 PROMPT_TEMPLATE = """你在对 GitHub 组织 farfarfun 里的仓库 {repo} 做一次只读的开发规范合规审计。
 
 请先使用当前仓库已安装的 `python-development-standards` skill，再结合下面的组织规范判断；不要用你自己的通用最佳实践标准：
@@ -104,7 +107,7 @@ PROMPT_TEMPLATE = """你在对 GitHub 组织 farfarfun 里的仓库 {repo} 做�
 
 
 def gh(args):
-    r = subprocess.run(["gh", *args], capture_output=True, text=True)
+    r = subprocess.run(["gh", *args], capture_output=True, text=True, check=False)
     if r.returncode != 0:
         print(f"  !! 失败: {' '.join(args)}\n{r.stderr}", file=sys.stderr)
         return None
@@ -131,8 +134,10 @@ def clone_repo(repo_name, dest, token, python_standards_path):
     url = f"https://github.com/{ORG}/{repo_name}.git"
     r = subprocess.run(
         ["git", "clone", "--depth", "1", url, dest],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
         env={**os.environ, **git_auth_env(token)},
+        check=False,
     )
     if r.returncode != 0:
         # URL 里已经没有 token 了，仍兜底过滤一遍，防止 git 的报错信息带出凭据
@@ -142,9 +147,7 @@ def clone_repo(repo_name, dest, token, python_standards_path):
         print(f"  !! clone 失败 ({repo_name}): {safe_err[-500:]}", file=sys.stderr)
         return False
     skill_dir = os.path.dirname(python_standards_path)
-    skill_dest = os.path.join(
-        dest, ".agents", "skills", "python-development-standards"
-    )
+    skill_dest = os.path.join(dest, ".agents", "skills", "python-development-standards")
     os.makedirs(os.path.dirname(skill_dest), exist_ok=True)
     shutil.copytree(skill_dir, skill_dest)
     # codex exec 用 --sandbox danger-full-access（bwrap 在 CI 里起不来），
@@ -159,18 +162,28 @@ def run_codex(repo_path, repo_name, spec_text, base_env):
     os.close(fd)
     env = dict(base_env)
     cmd = [
-        "codex", "exec",
-        "--sandbox", "danger-full-access",
+        "codex",
+        "exec",
+        "--sandbox",
+        "danger-full-access",
         "--skip-git-repo-check",
-        "-m", MODEL,
-        "--output-schema", SCHEMA_PATH,
-        "-o", out_path,
+        "-m",
+        MODEL,
+        "--output-schema",
+        SCHEMA_PATH,
+        "-o",
+        out_path,
         prompt,
     ]
     try:
         r = subprocess.run(
-            cmd, cwd=repo_path, capture_output=True, text=True,
-            env=env, timeout=CODEX_TIMEOUT_SEC,
+            cmd,
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            env=env,
+            timeout=CODEX_TIMEOUT_SEC,
+            check=False,
         )
     except subprocess.TimeoutExpired:
         print(f"  !! codex 超时 ({repo_name})", file=sys.stderr)
@@ -183,7 +196,7 @@ def run_codex(repo_path, repo_name, spec_text, base_env):
     try:
         with open(out_path, encoding="utf-8") as f:
             return json.load(f)
-    except Exception as e:
+    except (OSError, ValueError) as e:
         print(f"  !! 解析 codex 输出失败 ({repo_name}): {e}", file=sys.stderr)
         return None
     finally:
@@ -192,8 +205,10 @@ def run_codex(repo_path, repo_name, spec_text, base_env):
 
 
 def main():
-    batch = json.load(open(BATCH_PATH, encoding="utf-8"))
-    spec_text = open(SPEC_PATH, encoding="utf-8").read()
+    with open(BATCH_PATH, encoding="utf-8") as f:
+        batch = json.load(f)
+    with open(SPEC_PATH, encoding="utf-8") as f:
+        spec_text = f.read()
     if not PYTHON_STANDARDS_PATH:
         print("缺少 PYTHON_STANDARDS_PATH 环境变量", file=sys.stderr)
         sys.exit(1)
@@ -226,7 +241,8 @@ def main():
             n = len(finding.get("findings", []))
             print(f"  -> {n} 条发现")
 
-    json.dump(results, open(FINDINGS_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    with open(FINDINGS_PATH, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
     n_findings = sum(len(r.get("findings", [])) for r in results)
     print(f"\n完成，扫描 {len(results)}/{len(batch)} 个仓库，共 {n_findings} 条发现")
 
