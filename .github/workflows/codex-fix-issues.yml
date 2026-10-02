@@ -84,7 +84,21 @@ jobs:
           ORG_PAT: ${{ secrets.ACTION_GITHUB_TOKEN }}
           TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
         run: |
-          git clone --depth 1 "https://x-access-token:${ORG_PAT}@github.com/farfarfun/${TARGET_REPO}.git" target
+          # 不把 token 拼进 clone URL：那样 token 会出现在 clone 进程的命令行参数里，
+          # 还会被 git 写进 target/.git/config 的 remote URL。改用 GIT_CONFIG_* 环境变量
+          # 注入 http.extraheader，token 只存在于环境变量中，既不进 argv 也不落盘。
+          # 写进 GITHUB_ENV 是因为后面"提交到默认分支"那步要用同一份凭据去 push。
+          AUTH_HEADER="Authorization: Basic $(printf 'x-access-token:%s' "$ORG_PAT" | base64 -w0)"
+          echo "::add-mask::$AUTH_HEADER"
+          {
+            echo "GIT_CONFIG_COUNT=1"
+            echo "GIT_CONFIG_KEY_0=http.https://github.com/.extraheader"
+            echo "GIT_CONFIG_VALUE_0=$AUTH_HEADER"
+          } >> "$GITHUB_ENV"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="http.https://github.com/.extraheader"
+          export GIT_CONFIG_VALUE_0="$AUTH_HEADER"
+          git clone --depth 1 "https://github.com/farfarfun/${TARGET_REPO}.git" target
 
       - name: 安装 Codex CLI
         run: npm install -g @openai/codex

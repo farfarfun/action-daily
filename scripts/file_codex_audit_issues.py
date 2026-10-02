@@ -11,6 +11,12 @@ workflow_dispatch 重跑时产生重复。
 
 只有 medium/high 置信度的发现才建 issue——low 置信度大概率是模型没把握的猜测，
 不单独占用 issue 噪音仓库维护者。
+
+调 gh 用 subprocess 而不是组织规范默认的 funshell：issue 正文是多行 Markdown（含
+反引号、`$`、换行），必须按 argv 整体传给 gh，而 funshell 的 `run_shell` 只接收一条
+shell 字符串（`shell=True`），拼进去就会被 shell 解析、正文损坏甚至命令注入；它也不
+支持 stdin 输入、拿不到退出码（这里要靠退出码判断建 issue 是否成功）。另外本仓库的
+workflow 只用标准库、不装第三方依赖。
 """
 
 import json

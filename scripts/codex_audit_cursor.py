@@ -13,6 +13,12 @@ file_codex_audit_issues.py 建 issue 前的即时检查）。
 
 批次列表写到 codex_audit_batch.json，游标写回 codex_audit_cursor.json（都留在
 本仓库，因为游标状态是这条流水线自己的运行状态，与 todo-list 内容无关）。
+
+调 gh 用 subprocess 而不是组织规范默认的 funshell：funshell 的 `run_shell` 只返回
+stdout、拿不到退出码，而这里必须靠退出码区分"gh 调用失败"（返回 None、保守地不跳过
+任何仓库）和"确实没有 open issue"（返回空集合）；它还要求把命令拼成 shell 字符串
+（`shell=True`），仓库名/标题会进入 shell 解析。另外本仓库的 workflow 只用标准库、
+不装第三方依赖。
 """
 
 import json

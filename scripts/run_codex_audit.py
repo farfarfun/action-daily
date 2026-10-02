@@ -20,9 +20,18 @@ codex_audit_findings.json，供 file_codex_audit_issues.py 去重后建 issue
 （issue 集中建在 farfarfun/todo-list，沿用现有审计角度的惯例）。
 
 克隆用 ORG_PAT（而不是默认 GITHUB_TOKEN），因为组织里有私有仓库，默认 token
-的权限范围只到 workflow 所在的 daily-action 自己。
+的权限范围只到 workflow 所在的 daily-action 自己。凭据通过 GIT_CONFIG_* 环境变量
+注入 http.extraheader（见 `git_auth_env`），不拼进 URL。
+
+这里直接用 subprocess 而不是组织规范默认的 funshell：funshell 的 `run_shell` 接收
+一条 shell 字符串（`shell=True`）、只返回 stdout，不支持自定义 env、拿不到退出码和
+stderr。本脚本三项都要：要给 codex 子进程注入 CODEX_HOME/CODEX_API_KEY，要靠退出码
+和 stderr 判断 clone/codex 失败，还要把 LLM prompt 和仓库名按 argv 传入——换成拼
+shell 字符串会引入注入风险，也会让凭据重新出现在命令行里。同时本仓库的 workflow 不
+装任何第三方依赖（只用标准库），引入 funshell 需要额外安装步骤却换不回等价能力。
 """
 
+import base64
 import json
 import os
 import shutil
@@ -102,14 +111,31 @@ def gh(args):
     return r.stdout
 
 
+def git_auth_env(token):
+    """返回注入 git 子进程的认证环境变量（token 不进命令行、不落盘到 .git/config）。
+
+    不用 `https://x-access-token:<token>@github.com/...` 这种 URL：token 会出现在
+    clone 进程的命令行参数里（同机任何用户 `ps` 可见），还会被 git 原样写进
+    `.git/config` 的 remote URL，留在临时克隆目录里。改用 GIT_CONFIG_* 这组环境变量
+    为本次调用注入 `http.extraheader`，凭据只存在于子进程环境中。
+    """
+    basic = base64.b64encode(f"x-access-token:{token}".encode()).decode()
+    return {
+        "GIT_CONFIG_COUNT": "1",
+        "GIT_CONFIG_KEY_0": "http.https://github.com/.extraheader",
+        "GIT_CONFIG_VALUE_0": f"Authorization: Basic {basic}",
+    }
+
+
 def clone_repo(repo_name, dest, token, python_standards_path):
-    url = f"https://x-access-token:{token}@github.com/{ORG}/{repo_name}.git"
+    url = f"https://github.com/{ORG}/{repo_name}.git"
     r = subprocess.run(
         ["git", "clone", "--depth", "1", url, dest],
         capture_output=True, text=True,
+        env={**os.environ, **git_auth_env(token)},
     )
     if r.returncode != 0:
-        # stderr 里可能带着 clone URL（含 token），逐行过滤掉包含 token 的行再打印
+        # URL 里已经没有 token 了，仍兜底过滤一遍，防止 git 的报错信息带出凭据
         safe_err = "\n".join(
             line for line in r.stderr.splitlines() if token not in line
         )

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# 运行时与日志
+.run/
+logs/
+*.log
+*.db
+
+# 压缩包与大文件
+*.rar
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
+
+# workflow 运行时生成的中间产物（不进版本管理；
+# scripts/codex_audit_cursor.json 是需要跨运行保留的游标状态，故不在此列）
+scripts/codex_audit_batch.json
+scripts/codex_audit_findings.json
+scripts/codex_audit_issues.json
+issue.json
+
+# workflow 临时 clone 下来的参考仓库
+todo-list-ref/
+lang-spec-hub/
+
+# AI 编码助手：本地状态不进版本管理，团队共享定义要进
+.claude/*
+!.claude/agents/
+!.claude/commands/
+!.claude/skills/
+!.claude/settings.json
+.codex/*
+!.codex/prompts/
+.cursor/*
+!.cursor/agents/
+!.cursor/rules/
+
+.aider*
+.gemini/
+.continue/
+.windsurf/
+.roo/
+.cline/
+.specstory/
+CLAUDE.local.md
+AGENTS.local.md

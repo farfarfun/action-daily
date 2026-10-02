@@ -82,7 +82,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add .mirror-state/gitee.json
-          git diff --cached --quiet || git commit -m 'chore: update Gitee mirror state [skip ci]'
+          git diff --cached --quiet || git commit -m 'chore: 更新 Gitee 镜像状态，供下次增量同步跳过未变仓库 [skip ci]'
 
           # github.sha (and thus this checkout) is resolved at trigger time,
           # not run-start time, so an overlapping run can leave main ahead of
