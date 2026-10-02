@@ -3,7 +3,7 @@ name: Codex 自动修复（codex-audit 发现）
 # 读一条 codex-find-issues.yml 在 farfarfun/todo-list 建的 issue，clone 目标
 # 仓库，用 Codex CLI 尝试修复，直接提交到目标仓库默认分支。
 #
-# 这条流水线本身跑在 daily-action，但 issue 在 todo-list、要修的代码在组织内
+# 这条流水线本身跑在 action-daily，但 issue 在 todo-list、要修的代码在组织内
 # 其它任意仓库，跟 workflow 所在仓库都不是同一个，所以下面的 gh 操作统一用
 # org 级 ACTION_GITHUB_TOKEN，而不是默认 GITHUB_TOKEN。
 #
@@ -49,7 +49,7 @@ jobs:
     timeout-minutes: 60
     env:
       # 全流程的 gh 操作目标都是 farfarfun/todo-list 或组织内其它仓库，
-      # 跟 workflow 所在的 daily-action 不是同一个仓库，默认 GITHUB_TOKEN
+      # 跟 workflow 所在的 action-daily 不是同一个仓库，默认 GITHUB_TOKEN
       # 权限范围到不了，复用已有的 org 级 ACTION_GITHUB_TOKEN
       GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
     steps:

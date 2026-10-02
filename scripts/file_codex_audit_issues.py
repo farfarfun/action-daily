@@ -1,6 +1,6 @@
 """为 run_codex_audit.py 的发现分别建 issue，按仓库聚合、按置信度过滤、去重。
 
-这条流水线跑在 farfarfun/daily-action，但 issue 集中建在 farfarfun/todo-list
+这条流水线跑在 farfarfun/action-daily，但 issue 集中建在 farfarfun/todo-list
 （沿用 todo-list 现有 file_py_typed_issues.py 等审计脚本的惯例，REPO 常量硬编码
 指向 todo-list，不是本仓库），所以调 gh 的 GH_TOKEN 必须有跨仓库权限。
 

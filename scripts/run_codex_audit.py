@@ -11,7 +11,7 @@ bwrap，只读约束改成 clone 完之后手动 chmod 整个仓库目录为不�
 ——这不是标准 OpenAI 模型名，说明走的是自定义/代理的 OpenAI 兼容端点，所以还需要
 能覆盖 base_url（见 setup_codex_home）。
 
-这条流水线跑在 farfarfun/daily-action（找问题/改代码的自动化归这个仓库管），但
+这条流水线跑在 farfarfun/action-daily（找问题/改代码的自动化归这个仓库管），但
 SPEC.md 只存在于 farfarfun/todo-list，所以从 TODO_LIST_DIR 指向的一份 todo-list
 克隆里读取，而不是本仓库自己的路径。
 
@@ -20,7 +20,7 @@ codex_audit_findings.json，供 file_codex_audit_issues.py 去重后建 issue
 （issue 集中建在 farfarfun/todo-list，沿用现有审计角度的惯例）。
 
 克隆用 ORG_PAT（而不是默认 GITHUB_TOKEN），因为组织里有私有仓库，默认 token
-的权限范围只到 workflow 所在的 daily-action 自己。凭据通过 GIT_CONFIG_* 环境变量
+的权限范围只到 workflow 所在的 action-daily 自己。凭据通过 GIT_CONFIG_* 环境变量
 注入 http.extraheader（见 `git_auth_env`），不拼进 URL。
 
 这里直接用 subprocess 而不是组织规范默认的 funshell：funshell 的 `run_shell` 接收

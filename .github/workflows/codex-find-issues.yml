@@ -6,7 +6,7 @@ name: Codex 规范审计（找问题）
 # 角度的惯例）。每天跑一批（见 scripts/codex_audit_cursor.json 的 batch_size），
 # 滚动覆盖全组织，同时靠"仓库已有 open issue 就跳过"避免重复扫描和重复建 issue。
 #
-# 这条流水线本身跑在 daily-action（找问题/改代码的自动化归这个仓库管），但
+# 这条流水线本身跑在 action-daily（找问题/改代码的自动化归这个仓库管），但
 # SPEC.md、mapping.json 只存在于 todo-list，所以每次运行先把 todo-list clone
 # 到 todo-list-ref/ 供脚本读取。
 #

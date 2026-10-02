@@ -6,7 +6,7 @@ codex_audit_cursor.json 里的游标滚动推进；同时跳过已经有 open �
 既避免重复扫描浪费 API 调用，也是"避免重复建 issue"的第一道防线（第二道在
 file_codex_audit_issues.py 建 issue 前的即时检查）。
 
-这个流水线本身跑在 farfarfun/daily-action（找问题+改代码的自动化归 daily-action
+这个流水线本身跑在 farfarfun/action-daily（找问题+改代码的自动化归 action-daily
 管），但 issue 集中建在 farfarfun/todo-list（沿用现有审计角度的惯例），mapping.json
 和 SPEC.md 也只存在于 todo-list，所以本脚本从 TODO_LIST_DIR 指向的一份 todo-list
 克隆里读取它们，而不是本仓库自己的路径。

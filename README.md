@@ -1,4 +1,4 @@
-# daily-action
+# action-daily
 
 farfarfun 组织的定时任务集合：把公开仓库镜像同步到 Gitee，并对照组织开发规范
 （[farfarfun/todo-list](https://github.com/farfarfun/todo-list) 的 `SPEC.md`）
