@@ -27,7 +27,7 @@ jobs:
           while read -r repo; do
             prs=$(gh pr list --repo "$repo" --state open --limit 100 \
               --json number,headRefName,isDraft \
-              --jq '.[] | select(.isDraft == false and (.headRefName | startswith("automation/"))) | [.number, .headRefName] | @tsv' 2>/dev/null || true)
+              --jq '[.[] | select(.isDraft == false and (.headRefName | startswith("automation/")))] | sort_by(.number) | reverse | .[] | [.number, .headRefName] | @tsv' 2>/dev/null || true)
             while IFS=$'\t' read -r pr branch; do
               [[ -n "$pr" ]] || continue
 
@@ -38,6 +38,11 @@ jobs:
               [[ "$owner" == "farfarfun" ]] || continue
               if [[ "$state" == "behind" ]]; then
                 gh pr update-branch "$pr" --repo "$repo" || true
+                continue
+              fi
+              if [[ "$state" == "dirty" && "$branch" == automation/gitee-state-* ]]; then
+                gh pr close "$pr" --repo "$repo" --delete-branch \
+                  --comment "该镜像状态快照已与后续 main 更新冲突；下次同步会基于最新状态重新生成。"
                 continue
               fi
               [[ "$state" == "clean" ]] || continue
