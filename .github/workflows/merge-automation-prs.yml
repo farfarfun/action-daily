@@ -1,0 +1,61 @@
+name: Merge automation PRs
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: merge-automation-prs
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+    steps:
+      - name: Merge ready automation PRs
+        run: |
+          set -euo pipefail
+
+          gh repo list farfarfun --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner' |
+          while read -r repo; do
+            prs=$(gh pr list --repo "$repo" --state open --limit 100 \
+              --json number,headRefName,isDraft \
+              --jq '.[] | select(.isDraft == false and (.headRefName | startswith("automation/"))) | [.number, .headRefName] | @tsv' 2>/dev/null || true)
+            while IFS=$'\t' read -r pr branch; do
+              [[ -n "$pr" ]] || continue
+
+              details=$(gh api "repos/${repo}/pulls/${pr}") || continue
+              owner=$(jq -r '.head.repo.owner.login' <<<"$details")
+              state=$(jq -r '.mergeable_state' <<<"$details")
+              sha=$(jq -r '.head.sha' <<<"$details")
+              [[ "$owner" == "farfarfun" ]] || continue
+              if [[ "$state" == "behind" ]]; then
+                gh pr update-branch "$pr" --repo "$repo" || true
+                continue
+              fi
+              [[ "$state" == "clean" ]] || continue
+
+              checks=$(gh api "repos/${repo}/commits/${sha}/check-runs") || continue
+              pending=$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"$checks")
+              failed=$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"$checks")
+              [[ "$pending" == 0 && "$failed" == 0 ]] || continue
+
+              gh pr merge "$pr" --repo "$repo" --squash --delete-branch || continue
+
+              if [[ "$branch" =~ ^automation/codex-fix-([0-9]+)- ]]; then
+                issue="${BASH_REMATCH[1]}"
+                gh issue comment "$issue" --repo farfarfun/todo-list \
+                  --body "修复 PR ${repo}#${pr} 已合并。"
+                gh issue edit "$issue" --repo farfarfun/todo-list \
+                  --add-label fix-applied --remove-label fix-proposed
+                gh issue close "$issue" --repo farfarfun/todo-list
+              fi
+            done <<<"$prs"
+          done

@@ -27,6 +27,11 @@ on:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
+
+concurrency:
+  group: codex-audit-find
+  cancel-in-progress: false
 
 jobs:
   audit:
@@ -96,11 +101,25 @@ jobs:
       - name: 建 issue（自动去重）
         run: python3 scripts/file_codex_audit_issues.py
 
-      - name: 提交游标状态
+      - name: 提交游标状态 PR
         if: ${{ github.event.inputs.repos == '' }}
         run: |
           git config user.name "farfarfun-bot"
           git config user.email "farfarfun@qq.com"
           git add scripts/codex_audit_cursor.json
-          git diff --cached --quiet || git commit -m "chore: 推进 codex 审计游标"
-          git push
+          git diff --cached --quiet && exit 0
+
+          cursor_file=$(mktemp)
+          cp scripts/codex_audit_cursor.json "$cursor_file"
+          branch="automation/codex-audit-cursor-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git fetch origin main
+          git switch -c "$branch" origin/main
+          cp "$cursor_file" scripts/codex_audit_cursor.json
+          git add scripts/codex_audit_cursor.json
+          git commit -m "chore: 推进 codex 审计游标"
+          git push -u origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: 推进 codex 审计游标" \
+            --body "由 Codex 规范审计运行 ${GITHUB_RUN_ID} 自动生成。"
