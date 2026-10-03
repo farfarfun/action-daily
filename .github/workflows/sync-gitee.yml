@@ -2,6 +2,8 @@ name: Mirror to Gitee
 
 on:
   push:
+    paths-ignore:
+      - '.mirror-state/**'
   schedule:
     - cron: "17 */2 * * *"  # incremental, every 2 hours (unchanged cadence, off the :00 mark)
     - cron: "53 19 * * *"   # daily full sync (03:53 Asia/Shanghai) -- re-verifies every repo against Gitee and self-heals any state drift left by an incremental run
@@ -14,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: sync-gitee
@@ -72,27 +75,28 @@ jobs:
           incremental: ${{ steps.mode.outputs.incremental }}
           workers: ${{ steps.mode.outputs.workers }}
 
-      # Committed to this repo so it survives across runs (runners are
-      # ephemeral); "[skip ci]" stops this from re-triggering the `on: push`
-      # trigger above.
-      - name: Persist mirror state
+      - name: Persist mirror state via PR
         if: always()
+        env:
+          GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
         run: |
           [[ -f .mirror-state/gitee.json ]] || exit 0
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add .mirror-state/gitee.json
-          git diff --cached --quiet || git commit -m 'chore: 更新 Gitee 镜像状态，供下次增量同步跳过未变仓库 [skip ci]'
+          git diff --cached --quiet && exit 0
 
-          # github.sha (and thus this checkout) is resolved at trigger time,
-          # not run-start time, so an overlapping run can leave main ahead of
-          # what we checked out even after the concurrency group serializes
-          # execution. The state file is regenerated fresh each run rather
-          # than diff-applied, so preferring "ours" on conflict is safe --
-          # any staleness self-heals on the next full sync.
-          for i in 1 2 3 4 5; do
-            git push && break
-            [[ $i -eq 5 ]] && exit 1
-            git fetch origin main
-            git rebase -X ours origin/main
-          done
+          state_file=$(mktemp)
+          cp .mirror-state/gitee.json "$state_file"
+          branch="automation/gitee-state-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git fetch origin main
+          git switch -c "$branch" origin/main
+          cp "$state_file" .mirror-state/gitee.json
+          git add .mirror-state/gitee.json
+          git commit -m 'chore: 更新 Gitee 镜像状态 [skip ci]'
+          git push -u origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: 更新 Gitee 镜像状态 [skip ci]" \
+            --body "由 Gitee 镜像运行 ${GITHUB_RUN_ID} 自动生成。"

@@ -19,6 +19,10 @@ permissions:
   contents: read
   issues: write
 
+concurrency:
+  group: codex-fix-issues
+  cancel-in-progress: false
+
 jobs:
   select:
     runs-on: ubuntu-latest
@@ -27,13 +31,13 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
     steps:
-      - name: 选择最旧的 5 个 issue
+      - name: 选择最旧的 5 个格式有效 issue
         id: issues
         run: |
           NUMBERS=$(gh issue list --repo farfarfun/todo-list \
             --label codex-audit --state open --limit 100 \
-            --json number,createdAt \
-            --jq 'sort_by(.createdAt) | map(.number) | .[:5] | @json')
+            --json number,createdAt,title \
+            --jq 'map(select(.title | test("^\\[codex审计\\] [^:]+:"))) | sort_by(.createdAt) | map(.number) | .[:5] | @json')
           echo "issue_numbers=$NUMBERS" >> "$GITHUB_OUTPUT"
           echo "本轮修复 issue：$NUMBERS"
 
@@ -138,11 +142,12 @@ jobs:
             -m gpt-5.6-terra \
             "$PROMPT"
 
-      - name: 提交到默认分支
+      - name: 创建修复 PR
         id: commit
         working-directory: target
         env:
           ISSUE_NUMBER: ${{ matrix.issue_number }}
+          TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
         run: |
           git config user.name "farfarfun-bot"
           git config user.email "farfarfun@qq.com"
@@ -152,20 +157,30 @@ jobs:
             echo "没有改动（判断是误报，或 Codex 未能修复），跳过提交"
             exit 0
           fi
-          git commit -m "fix: 修复 codex 审计发现的问题（来自 farfarfun/todo-list#${ISSUE_NUMBER}）"
-          git push origin HEAD
-          echo "committed=true" >> "$GITHUB_OUTPUT"
-          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: 关闭已修复 issue
+          base_branch=$(git symbolic-ref refs/remotes/origin/HEAD --short | cut -d/ -f2-)
+          branch="automation/codex-fix-${ISSUE_NUMBER}-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
+          git commit -m "fix: 修复 codex 审计发现的问题（来自 farfarfun/todo-list#${ISSUE_NUMBER}）"
+          git fetch origin "$base_branch"
+          git rebase "origin/$base_branch"
+          git push -u origin "$branch"
+          pr_url=$(gh pr create \
+            --repo "farfarfun/${TARGET_REPO}" \
+            --base "$base_branch" \
+            --head "$branch" \
+            --title "fix: 修复 codex 审计发现的问题 #${ISSUE_NUMBER}" \
+            --body "修复 farfarfun/todo-list#${ISSUE_NUMBER}。由 action-daily 运行 ${GITHUB_RUN_ID} 自动生成。")
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+          echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
+
+      - name: 标记已提出修复
         if: ${{ steps.commit.outputs.committed == 'true' }}
         env:
           ISSUE_NUMBER: ${{ matrix.issue_number }}
-          TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
-          COMMIT_SHA: ${{ steps.commit.outputs.commit_sha }}
+          PR_URL: ${{ steps.commit.outputs.pr_url }}
         run: |
           gh issue comment "$ISSUE_NUMBER" --repo farfarfun/todo-list \
-            --body "Codex 已直接提交到 ${TARGET_REPO} 的默认分支，commit：${COMMIT_SHA}"
+            --body "Codex 已创建修复 PR：${PR_URL}"
           gh issue edit "$ISSUE_NUMBER" --repo farfarfun/todo-list \
-            --add-label fix-applied --remove-label codex-audit
-          gh issue close "$ISSUE_NUMBER" --repo farfarfun/todo-list
+            --add-label fix-proposed --remove-label codex-audit
