@@ -141,8 +141,8 @@
       "src_sha": "77b6e39e1dd5416441b7494d427d22d8ecc072c6"
     },
     "action-daily": {
-      "dst_sha": "a57c9bbe0190c130fcf51fb5e44c79933e986580",
-      "src_sha": "a57c9bbe0190c130fcf51fb5e44c79933e986580"
+      "dst_sha": "ecb7367c175ec5e7a986c14acc20622d75720bcb",
+      "src_sha": "ecb7367c175ec5e7a986c14acc20622d75720bcb"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -153,8 +153,8 @@
       "src_sha": "2fb2167831993c60d2eb6de48ca3fe8d9e9aa406"
     },
     "farcache": {
-      "dst_sha": "e70c9bf1866ef8e6167bf2d5d34f7dbbd5f5c703",
-      "src_sha": "e70c9bf1866ef8e6167bf2d5d34f7dbbd5f5c703"
+      "dst_sha": "02c1b53bd747c0bb747b3b258d308ad3297da599",
+      "src_sha": "02c1b53bd747c0bb747b3b258d308ad3297da599"
     },
     "farcode": {
       "dst_sha": "c818e5b535b08fc15c33783a866ec9df0afe3131",
