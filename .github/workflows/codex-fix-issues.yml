@@ -82,7 +82,26 @@ jobs:
           fi
           echo "repo_name=$REPO_NAME" >> "$GITHUB_OUTPUT"
 
+      - name: 跳过归档仓库
+        id: archive
+        env:
+          ISSUE_NUMBER: ${{ matrix.issue_number }}
+          TARGET_REPO: ${{ steps.fetch.outputs.repo_name }}
+        run: |
+          if [[ "$(gh repo view "farfarfun/${TARGET_REPO}" --json isArchived --jq .isArchived)" != "true" ]]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          gh label create audit-dismissed --repo farfarfun/todo-list \
+            --description "自动审计经复核无须修改" --color 6E7781 --force
+          gh issue comment "$ISSUE_NUMBER" --repo farfarfun/todo-list \
+            --body "目标仓库已归档为只读，跳过自动修复并停止重复入队。"
+          gh issue edit "$ISSUE_NUMBER" --repo farfarfun/todo-list \
+            --add-label audit-dismissed --remove-label codex-audit
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+
       - name: clone 目标仓库
+        if: ${{ steps.archive.outputs.skip != 'true' }}
         env:
           # 复用已有的 org 级 ACTION_GITHUB_TOKEN，不单独新建 ORG_PAT
           ORG_PAT: ${{ secrets.ACTION_GITHUB_TOKEN }}
@@ -105,9 +124,11 @@ jobs:
           git clone --depth 1 "https://github.com/farfarfun/${TARGET_REPO}.git" target
 
       - name: 安装 Codex CLI
+        if: ${{ steps.archive.outputs.skip != 'true' }}
         run: npm install -g @openai/codex
 
       - name: 用 Codex 修复
+        if: ${{ steps.archive.outputs.skip != 'true' }}
         working-directory: target
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -144,6 +165,7 @@ jobs:
             "$PROMPT"
 
       - name: 创建修复 PR
+        if: ${{ steps.archive.outputs.skip != 'true' }}
         id: commit
         working-directory: target
         env:
@@ -189,7 +211,7 @@ jobs:
           echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
 
       - name: 标记已提出修复
-        if: ${{ steps.commit.outputs.committed == 'true' }}
+        if: ${{ steps.archive.outputs.skip != 'true' && steps.commit.outputs.committed == 'true' }}
         env:
           ISSUE_NUMBER: ${{ matrix.issue_number }}
           PR_URL: ${{ steps.commit.outputs.pr_url }}
@@ -207,7 +229,7 @@ jobs:
           fi
 
       - name: 标记无需或无法自动修复
-        if: ${{ steps.commit.outputs.committed != 'true' }}
+        if: ${{ steps.archive.outputs.skip != 'true' && steps.commit.outputs.committed != 'true' }}
         env:
           ISSUE_NUMBER: ${{ matrix.issue_number }}
           WORKFLOW_SKIPPED: ${{ steps.commit.outputs.workflow_skipped }}
