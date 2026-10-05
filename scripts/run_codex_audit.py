@@ -29,6 +29,17 @@ stderr。本脚本三项都要：要给 codex 子进程注入 CODEX_HOME/CODEX_A
 和 stderr 判断 clone/codex 失败，还要把 LLM prompt 和仓库名按 argv 传入——换成拼
 shell 字符串会引入注入风险，也会让凭据重新出现在命令行里。同时本仓库的 workflow 不
 装任何第三方依赖（只用标准库），引入 funshell 需要额外安装步骤却换不回等价能力。
+
+同样的"零依赖、workflow 不跑 pip install"约束也适用于日志：这里用 `print`/
+`file=sys.stderr` 而不是 `farlog`，因为所有诊断信息都只是写给 GitHub Actions 的
+运行日志看，没有 handler 配置、落盘路径或敏感字段需要 farlog 的能力，引入它纯粹是
+多一次可能失败的安装步骤。`base_url` 等真正可能带凭据的字段单独脱敏处理（见
+`setup_codex_home` 调用处），不依赖 farlog 的通用脱敏规则。
+
+codex 子进程的 env 单独构造为最小集合（见 `build_codex_env`），不会把本进程持有的
+`ORG_PAT`/`ACTIONS_*`/`GITHUB_TOKEN` 等凭据传给它：codex 要读取被审计仓库里的任意
+文件（包括可能被攻击者精心构造的 prompt注入内容），一旦被诱导读取/外传自己的进程
+环境变量，组织级 PAT 就会泄露。
 """
 
 import base64
@@ -151,8 +162,18 @@ def clone_repo(repo_name, dest, token, python_standards_path):
     os.makedirs(os.path.dirname(skill_dest), exist_ok=True)
     shutil.copytree(skill_dir, skill_dest)
     # codex exec 用 --sandbox danger-full-access（bwrap 在 CI 里起不来），
-    # 只读约束靠这里手动 chmod 整个目录树为不可写来兜底
-    subprocess.run(["chmod", "-R", "a-w", dest], check=False)
+    # 只读约束靠这里手动 chmod 整个目录树为不可写来兜底。chmod 失败时不能假装
+    # 保护生效——之前这里是 check=False 且不看返回码，失败也会继续往下跑
+    # danger-full-access 的 codex，相当于只读约束完全没有兜底。
+    r = subprocess.run(
+        ["chmod", "-R", "a-w", dest], capture_output=True, text=True, check=False
+    )
+    if r.returncode != 0:
+        print(
+            f"  !! 只读保护失败 ({repo_name})，拒绝继续审计：{r.stderr[-500:]}",
+            file=sys.stderr,
+        )
+        return False
     return True
 
 
@@ -204,6 +225,25 @@ def run_codex(repo_path, repo_name, spec_text, base_env):
             os.unlink(out_path)
 
 
+# 传给 codex 子进程的 env 只保留跑 CLI 本身需要的变量：PATH/HOME 等运行时必需项，
+# 加上 codex 自己要用的 CODEX_API_KEY/CODEX_HOME。GitHub Actions 的 job env 里还有
+# ORG_PAT（克隆私有仓库用）、GH_TOKEN/GITHUB_TOKEN 等凭据——这些只在本进程（clone、
+# gh）里用，不传给 codex。codex 要读取的是被审计仓库里任意内容，一旦仓库里有精心
+# 构造的 prompt 注入文本诱导它读取/回显自己的进程环境，复制整个 os.environ 就会把
+# 组织级 PAT 泄露出去。
+ENV_PASSTHROUGH = ("PATH", "HOME", "LANG", "LC_ALL", "TMPDIR", "TERM")
+
+
+def build_codex_env(codex_home):
+    env = {k: os.environ[k] for k in ENV_PASSTHROUGH if k in os.environ}
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if api_key:
+        env["CODEX_API_KEY"] = api_key
+    if codex_home:
+        env["CODEX_HOME"] = codex_home
+    return env
+
+
 def main():
     with open(BATCH_PATH, encoding="utf-8") as f:
         batch = json.load(f)
@@ -217,15 +257,12 @@ def main():
         print("缺少 ORG_PAT 环境变量，无法克隆仓库", file=sys.stderr)
         sys.exit(1)
 
-    base_env = dict(os.environ)
-    if "OPENAI_API_KEY" in base_env:
-        base_env["CODEX_API_KEY"] = base_env["OPENAI_API_KEY"]
     base_url = os.environ.get("OPENAI_BASE_URL")
     codex_home = setup_codex_home(base_url)
     if codex_home:
-        base_env["CODEX_HOME"] = codex_home
         # Endpoint URL may contain credentials or signed query parameters.
         print("已启用自定义 OpenAI endpoint")
+    base_env = build_codex_env(codex_home)
 
     results = []
     failures = []

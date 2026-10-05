@@ -15,10 +15,11 @@ file_codex_audit_issues.py 建 issue 前的即时检查）。
 本仓库，因为游标状态是这条流水线自己的运行状态，与 todo-list 内容无关）。
 
 调 gh 用 subprocess 而不是组织规范默认的 funshell：funshell 的 `run_shell` 只返回
-stdout、拿不到退出码，而这里必须靠退出码区分"gh 调用失败"（返回 None、保守地不跳过
-任何仓库）和"确实没有 open issue"（返回空集合）；它还要求把命令拼成 shell 字符串
-（`shell=True`），仓库名/标题会进入 shell 解析。另外本仓库的 workflow 只用标准库、
-不装第三方依赖。
+stdout、拿不到退出码，而这里必须靠退出码区分"gh 调用失败"（终止脚本，见
+`repos_with_open_issue`）和"确实没有 open issue"（返回空集合）；它还要求把命令拼成
+shell 字符串（`shell=True`），仓库名/标题会进入 shell 解析。诊断信息同样只用
+`print`/`sys.stderr` 而不是 `farlog`：只是 GitHub Actions 运行日志里的进度/失败提示，
+本仓库 workflow 不跑 `pip install`，引入 farlog 只会多一个安装失败点换不回能力。
 """
 
 import json
@@ -46,6 +47,14 @@ def gh(args):
 
 
 def repos_with_open_issue():
+    """返回已有 open codex-audit issue 的仓库名集合。
+
+    `gh` 调用失败（返回 None）和"确实查到 0 条"（返回 `"[]"`）必须分开处理：
+    过去两者都落进 `if not out` 分支、一律当成空集合，于是 gh 偶发失败时会把
+    "已有 open issue 的仓库" 误判成"没有"，导致这些仓库重新进入本轮批次、
+    file_codex_audit_issues.py 那边的去重检查如果恰好也失败，就会建出重复 issue。
+    这里改成：gh 调用失败直接让整个脚本以非 0 退出，而不是悄悄继续跑。
+    """
     out = gh(
         [
             "issue",
@@ -62,8 +71,12 @@ def repos_with_open_issue():
             "title",
         ]
     )
-    if not out:
-        return set()
+    if out is None:
+        print(
+            "查询已有 open issue 失败，为避免误判重复建 issue，终止本轮",
+            file=sys.stderr,
+        )
+        sys.exit(1)
     names = set()
     for row in json.loads(out):
         title = row["title"]

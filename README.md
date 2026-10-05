@@ -35,7 +35,8 @@ farfarfun 组织的定时任务集合：把公开仓库镜像同步到 Gitee，�
 | workflow | 定时 | 做什么 |
 | --- | --- | --- |
 | `codex-find-issues.yml` | 每 5 小时一批 | 按游标滚动选一批仓库，用 Codex CLI 对照 `SPEC.md` 做只读审计，命中就建 issue（label `codex-audit`） |
-| `codex-fix-issues.yml` | 每小时 5 条 | 取最旧的 open `codex-audit` issue，clone 目标仓库交给 Codex CLI 修复，直接提交到默认分支并关闭 issue |
+| `codex-fix-issues.yml` | 每小时 5 条 | 取最旧的 open `codex-audit` issue，clone 目标仓库交给 Codex CLI 修复，提交到 `automation/codex-fix-*` 分支并开 PR，issue 标为 `fix-proposed` |
+| `merge-automation-prs.yml` | 每 15 分钟 | 扫描全组织仓库，把检查通过的 `automation/*` 分支 PR 合并到默认分支；合并的是 `automation/codex-fix-*` 分支时，同步把对应 issue 标为 `fix-applied` 并关闭 |
 
 脚本分工：
 
@@ -44,12 +45,19 @@ farfarfun 组织的定时任务集合：把公开仓库镜像同步到 Gitee，�
 - `scripts/file_codex_audit_issues.py`：按仓库聚合、过滤 low 置信度、去重后建 issue
 - `scripts/codex_audit_schema.json`：Codex 输出的 JSON schema
 
+`codex-fix-issues.yml` 的自动化 token 没有 workflow scope，如果 Codex 的改动涉及
+`.github/workflows/`，这部分会被丢弃、PR 只带其余改动；若整条改动都在 workflow 下，
+则不建 PR，issue 标为 `manual-required` 转人工处理。若 Codex 复核后判断是误报、没有
+产生任何改动，issue 标为 `audit-dismissed` 并关闭标签转换（但 issue 本身保持当前
+open/closed 状态不变）。
+
 需要的 Actions secrets：`ACTION_GITHUB_TOKEN`（跨仓库读写 issue 与 clone 私有仓库）、
 `OPENAI_API_KEY`、`OPENAI_BASE_URL`（走自定义/代理的 OpenAI 兼容端点）。
 
 ### 本地运行
 
-脚本只用 Python 3.12 标准库，不需要安装 Python 依赖。本地运行前安装
+脚本只用 Python 标准库（`>=3.10`，与组织统一下限一致，未用到 3.11/3.12 专属语法），
+不需要安装 Python 依赖。本地运行前安装
 [`gh`](https://cli.github.com/) 和 [`codex`](https://github.com/openai/codex) CLI；以下命令适用于
 macOS（Homebrew）或 Debian/Ubuntu。其他平台请使用各工具的官方安装说明：
 

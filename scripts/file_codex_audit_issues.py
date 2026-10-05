@@ -15,8 +15,10 @@ workflow_dispatch 重跑时产生重复。
 调 gh 用 subprocess 而不是组织规范默认的 funshell：issue 正文是多行 Markdown（含
 反引号、`$`、换行），必须按 argv 整体传给 gh，而 funshell 的 `run_shell` 只接收一条
 shell 字符串（`shell=True`），拼进去就会被 shell 解析、正文损坏甚至命令注入；它也不
-支持 stdin 输入、拿不到退出码（这里要靠退出码判断建 issue 是否成功）。另外本仓库的
-workflow 只用标准库、不装第三方依赖。
+支持 stdin 输入、拿不到退出码（这里要靠退出码判断建 issue 是否成功，`has_open_issue`
+在 gh 失败时保守跳过建 issue，避免误判成重复）。诊断信息用 `print`/`sys.stderr` 而
+不是 `farlog`：只是写给 GitHub Actions 运行日志看，本仓库 workflow 不跑
+`pip install`，引入 farlog 只会多一个安装失败点换不回能力。
 """
 
 import json
@@ -43,6 +45,10 @@ def gh(args, input_text=None):
 
 
 def has_open_issue(repo_name):
+    """`gh` 调用失败时返回 True（当成"已存在"保守跳过建 issue），而不是当成
+    "没有"去创建：这是去重的最后一道防线，调用失败时宁可漏建一条 issue（下一轮
+    还能再查一次），也不要在 gh 偶发抖动时对同一仓库建出重复 issue。
+    """
     out = gh(
         [
             "issue",
@@ -59,8 +65,12 @@ def has_open_issue(repo_name):
             "title",
         ]
     )
-    if not out:
-        return False
+    if out is None:
+        print(
+            f"  !! 查询 {repo_name} 的已有 issue 失败，保守跳过建 issue",
+            file=sys.stderr,
+        )
+        return True
     prefix = f"{TITLE_PREFIX} {repo_name}:"
     return any(row["title"].startswith(prefix) for row in json.loads(out))
 
