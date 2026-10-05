@@ -224,27 +224,41 @@ def main():
     codex_home = setup_codex_home(base_url)
     if codex_home:
         base_env["CODEX_HOME"] = codex_home
-        print(f"使用自定义 OpenAI base_url: {base_url}")
+        # Endpoint URL may contain credentials or signed query parameters.
+        print("已启用自定义 OpenAI endpoint")
 
     results = []
-    with tempfile.TemporaryDirectory() as tmp:
-        for i, repo_name in enumerate(batch, 1):
-            print(f"[{i}/{len(batch)}] {repo_name}")
-            dest = os.path.join(tmp, repo_name)
-            if not clone_repo(repo_name, dest, token, PYTHON_STANDARDS_PATH):
-                continue
-            finding = run_codex(dest, repo_name, spec_text, base_env)
-            if finding is None:
-                continue
-            finding["repo"] = repo_name
-            results.append(finding)
-            n = len(finding.get("findings", []))
-            print(f"  -> {n} 条发现")
+    failures = []
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            for i, repo_name in enumerate(batch, 1):
+                print(f"[{i}/{len(batch)}] {repo_name}")
+                dest = os.path.join(tmp, repo_name)
+                if not clone_repo(repo_name, dest, token, PYTHON_STANDARDS_PATH):
+                    failures.append(repo_name)
+                    continue
+                finding = run_codex(dest, repo_name, spec_text, base_env)
+                if finding is None:
+                    failures.append(repo_name)
+                    continue
+                finding["repo"] = repo_name
+                results.append(finding)
+                n = len(finding.get("findings", []))
+                print(f"  -> {n} 条发现")
+    finally:
+        if codex_home:
+            shutil.rmtree(codex_home, ignore_errors=True)
 
     with open(FINDINGS_PATH, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     n_findings = sum(len(r.get("findings", [])) for r in results)
     print(f"\n完成，扫描 {len(results)}/{len(batch)} 个仓库，共 {n_findings} 条发现")
+    if failures:
+        print(
+            f"审计未完成：{len(failures)} 个仓库失败：{', '.join(failures)}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

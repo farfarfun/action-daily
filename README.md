@@ -49,8 +49,27 @@ farfarfun 组织的定时任务集合：把公开仓库镜像同步到 Gitee，�
 
 ### 本地运行
 
-脚本只用 Python 3.12 标准库，不需要安装依赖，但需要本机已有
-[`gh`](https://cli.github.com/)（已登录）和 [`codex`](https://github.com/openai/codex) CLI：
+脚本只用 Python 3.12 标准库，不需要安装 Python 依赖。本地运行前安装
+[`gh`](https://cli.github.com/) 和 [`codex`](https://github.com/openai/codex) CLI；以下命令适用于
+macOS（Homebrew）或 Debian/Ubuntu。其他平台请使用各工具的官方安装说明：
+
+```bash
+# macOS
+brew install gh node
+
+# Debian/Ubuntu（二选一，不要与上面的 macOS 命令同时运行）
+sudo apt update && sudo apt install -y gh nodejs npm
+
+npm install -g @openai/codex
+gh auth login
+```
+
+`gh auth login` 的 token 必须能读取组织内待审计仓库，并能在 `farfarfun/todo-list`
+创建 issue。`codex` 可执行 `codex login` 完成登录；使用 API 或自定义兼容端点时，按下面的
+`OPENAI_API_KEY` 和可选 `OPENAI_BASE_URL` 环境变量配置即可。
+
+GitHub Actions 会自行安装 Python、Node.js 和 Codex CLI，并从 Actions secrets 读取凭据；
+下面的命令仅适用于本地运行：
 
 ```bash
 # 准备：SPEC.md / mapping.json 来自 todo-list，克隆一份供脚本读取
