@@ -31,18 +31,25 @@ jobs:
             while IFS=$'\t' read -r pr branch; do
               [[ -n "$pr" ]] || continue
 
-              details=$(gh api "repos/${repo}/pulls/${pr}") || continue
+              details=
+              state=unknown
+              for _ in 1 2 3; do
+                details=$(gh api "repos/${repo}/pulls/${pr}") || break
+                state=$(jq -r '.mergeable_state' <<<"$details")
+                [[ "$state" != "unknown" ]] && break
+                sleep 2
+              done
+              [[ -n "${details:-}" ]] || continue
               owner=$(jq -r '.head.repo.owner.login' <<<"$details")
-              state=$(jq -r '.mergeable_state' <<<"$details")
               sha=$(jq -r '.head.sha' <<<"$details")
               [[ "$owner" == "farfarfun" ]] || continue
-              if [[ "$state" == "behind" ]]; then
-                gh pr update-branch "$pr" --repo "$repo" || true
+              if [[ "$branch" == automation/gitee-state-* && "$state" != "clean" ]]; then
+                gh pr close "$pr" --repo "$repo" --delete-branch \
+                  --comment "该镜像状态快照已被后续 main 更新取代；下次同步会基于最新状态重新生成。"
                 continue
               fi
-              if [[ "$state" == "dirty" && "$branch" == automation/gitee-state-* ]]; then
-                gh pr close "$pr" --repo "$repo" --delete-branch \
-                  --comment "该镜像状态快照已与后续 main 更新冲突；下次同步会基于最新状态重新生成。"
+              if [[ "$state" == "behind" ]]; then
+                gh pr update-branch "$pr" --repo "$repo" || true
                 continue
               fi
               [[ "$state" == "clean" ]] || continue
