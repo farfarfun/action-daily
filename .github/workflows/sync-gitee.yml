@@ -102,3 +102,11 @@ jobs:
             --head "$branch" \
             --title "chore: 更新 Gitee 镜像状态 [skip ci]" \
             --body "由 Gitee 镜像运行 ${GITHUB_RUN_ID} 自动生成。"
+
+          gh pr list --state open --limit 100 --json number,headRefName \
+            --jq '.[] | select(.headRefName | startswith("automation/gitee-state-")) | [.number, .headRefName] | @tsv' |
+          while IFS=$'\t' read -r old_pr old_branch; do
+            [[ "$old_branch" == "$branch" ]] && continue
+            gh pr close "$old_pr" --delete-branch \
+              --comment "已由更新的镜像状态 PR 取代。"
+          done
