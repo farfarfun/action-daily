@@ -141,8 +141,8 @@
       "src_sha": "9d0f304ca6fbc5531a33e055d471bad4e1d4463a"
     },
     "action-daily": {
-      "dst_sha": "17eda02036100679974e7a1c9e911f2416272f4a",
-      "src_sha": "17eda02036100679974e7a1c9e911f2416272f4a"
+      "dst_sha": "e862b828bef74c5a035035805d78958cf8844cf2",
+      "src_sha": "e862b828bef74c5a035035805d78958cf8844cf2"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -257,24 +257,24 @@
       "src_sha": "6517cee531eadc23f517fd0769a66bf8d00fb450"
     },
     "funcraft": {
-      "dst_sha": "7f9c396c079eef0f23d8e496ad1f4f68d3c9c649",
-      "src_sha": "7f9c396c079eef0f23d8e496ad1f4f68d3c9c649"
+      "dst_sha": "0a3557849cafc24c0fe0b3635bb1801baa5a7112",
+      "src_sha": "0a3557849cafc24c0fe0b3635bb1801baa5a7112"
     },
     "funcron": {
       "dst_sha": "7f882ac7cbfe4d65fc0bc721615cc4236d9dce56",
       "src_sha": "7f882ac7cbfe4d65fc0bc721615cc4236d9dce56"
     },
     "fundaily": {
-      "dst_sha": "6f8055f9c18be0986596d479ff2b935d23b2ba52",
-      "src_sha": "6f8055f9c18be0986596d479ff2b935d23b2ba52"
+      "dst_sha": "f388213f49271dc7d58234ba1fcfd67d748a82d1",
+      "src_sha": "f388213f49271dc7d58234ba1fcfd67d748a82d1"
     },
     "fundata": {
       "dst_sha": "8daaef6e74f820c18f3112bb7bb2f219e3a3a112",
       "src_sha": "8daaef6e74f820c18f3112bb7bb2f219e3a3a112"
     },
     "fundataworks": {
-      "dst_sha": "b4218f368bdebf548b0f000ebb1061115ebcf1ca",
-      "src_sha": "b4218f368bdebf548b0f000ebb1061115ebcf1ca"
+      "dst_sha": "c7e69fde3b0f542e49e624d33be004f351b305c9",
+      "src_sha": "c7e69fde3b0f542e49e624d33be004f351b305c9"
     },
     "fundb": {
       "dst_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe",
