@@ -141,8 +141,8 @@
       "src_sha": "9d0f304ca6fbc5531a33e055d471bad4e1d4463a"
     },
     "action-daily": {
-      "dst_sha": "6ad0780ffc5afc4cd421d284027daedc6abf3241",
-      "src_sha": "6ad0780ffc5afc4cd421d284027daedc6abf3241"
+      "dst_sha": "8a157035fc3d4ea32b2d32ca0ffb91feecb200ef",
+      "src_sha": "8a157035fc3d4ea32b2d32ca0ffb91feecb200ef"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -385,24 +385,24 @@
       "src_sha": "b5f2f982441b3119dfda37a705ea2a5fc13994be"
     },
     "fungoogle": {
-      "dst_sha": "579f561407ed28295e0a2dbb687fce29a2744fcb",
-      "src_sha": "579f561407ed28295e0a2dbb687fce29a2744fcb"
+      "dst_sha": "27f44e04fb8c1e8465293b18ebe2d503aac521ed",
+      "src_sha": "27f44e04fb8c1e8465293b18ebe2d503aac521ed"
     },
     "funhtml": {
-      "dst_sha": "75aee7461a50c2e301cb8f54b17aab245df1bee4",
-      "src_sha": "75aee7461a50c2e301cb8f54b17aab245df1bee4"
+      "dst_sha": "bd6edd53d9c9ddd791367b332642dcde00ac1bff",
+      "src_sha": "bd6edd53d9c9ddd791367b332642dcde00ac1bff"
     },
     "funhub": {
-      "dst_sha": "f91b2ba81a2cc1e7cbabe4a5c293286c0ca2163b",
-      "src_sha": "f91b2ba81a2cc1e7cbabe4a5c293286c0ca2163b"
+      "dst_sha": "696c4cd6dc82c1e10f0f311f67c9fe2f9e9cb609",
+      "src_sha": "696c4cd6dc82c1e10f0f311f67c9fe2f9e9cb609"
     },
     "funimage": {
-      "dst_sha": "14fef99155e82b08d920ab9695c7587f600b75fb",
-      "src_sha": "14fef99155e82b08d920ab9695c7587f600b75fb"
+      "dst_sha": "80198e2789e041d73a3c6b33e0b1f42b47bf0f3a",
+      "src_sha": "80198e2789e041d73a3c6b33e0b1f42b47bf0f3a"
     },
     "funinstall": {
-      "dst_sha": "808911fe24f5b9007bb28269dfcf6c7a4f894b30",
-      "src_sha": "808911fe24f5b9007bb28269dfcf6c7a4f894b30"
+      "dst_sha": "9f576d454629075412cc762074b62621f9a686de",
+      "src_sha": "9f576d454629075412cc762074b62621f9a686de"
     },
     "funjetbra": {
       "dst_sha": "f23430611ac3bf7923584922d8f2b048c51cf68c",
