@@ -107,6 +107,31 @@ python3 scripts/file_codex_audit_issues.py
 Gitee 镜像没有本地入口，逻辑都在 `farfarfun-action/mirror-repo` 里，本地复现请直接用
 `farfarfun/funmirror`。
 
+## Merge all PRs
+
+`merge-all-prs.yml` 只手动触发（`workflow_dispatch`），把 `farfarfun` 组织下**所有**仓库的
+open PR 批量合并——不限 `automation/*` 分支，这是它和 `merge-automation-prs.yml` 的区别。
+因为影响面大，默认跑 dry run：只在 job summary 里列出会合并/跳过哪些 PR 以及原因，确认后
+再把 `dry_run` 关掉实跑。
+
+可选输入：
+
+| 输入 | 默认 | 说明 |
+| --- | --- | --- |
+| `repos` | 空（全组织，跳过已归档仓库） | 仓库过滤，逗号/空格分隔，`funfile` 或 `farfarfun/funfile` 都行 |
+| `dry_run` | `true` | 只列出计划，不实际合并 |
+| `merge_method` | `squash` | `squash` / `merge` / `rebase` |
+| `require_checks` | `true` | 要求该 commit 上的 check-runs 无 pending、无失败 |
+| `include_forks` | `false` | 默认只处理 head 仓库属于 `farfarfun` 的 PR |
+| `update_branch` | `true` | `mergeable_state` 为 `behind` 时先更新分支，本轮不合并 |
+
+无论怎么配置，以下 PR 一律跳过：draft、带 `do-not-merge` / `wip` / `blocked` / `hold`
+label、以及 `mergeable_state` 不是 `clean` 的（关掉 `require_checks` 时额外允许
+`unstable`）。合并 `automation/codex-fix-*` 分支时，同样会把 `farfarfun/todo-list`
+里对应的 issue 标为 `fix-applied` 并关闭。有任何 PR 操作失败时该 run 会以失败收尾。
+
+用的 secret 和 Codex 审计一致：`ACTION_GITHUB_TOKEN`。
+
 ---
 
 ## 关于 farfarfun
