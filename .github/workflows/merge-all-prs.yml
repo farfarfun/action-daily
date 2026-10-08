@@ -1,0 +1,211 @@
+name: Merge all PRs
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos:
+        description: "仓库过滤（逗号/空格分隔，funfile 或 farfarfun/funfile；留空=全组织）"
+        required: false
+        default: ""
+      dry_run:
+        description: "只列出将要合并的 PR，不实际合并"
+        type: boolean
+        default: true
+      merge_method:
+        description: "合并方式"
+        type: choice
+        options:
+          - squash
+          - merge
+          - rebase
+        default: squash
+      require_checks:
+        description: "要求 CI 检查全部通过"
+        type: boolean
+        default: true
+      include_forks:
+        description: "包含来自 fork 的 PR"
+        type: boolean
+        default: false
+      update_branch:
+        description: "分支落后时先更新分支（本轮不合并）"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: merge-all-prs
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+      REPOS_INPUT: ${{ inputs.repos }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      MERGE_METHOD: ${{ inputs.merge_method }}
+      REQUIRE_CHECKS: ${{ inputs.require_checks }}
+      INCLUDE_FORKS: ${{ inputs.include_forks }}
+      UPDATE_BRANCH: ${{ inputs.update_branch }}
+    steps:
+      - name: Merge open PRs across farfarfun
+        run: |
+          set -euo pipefail
+
+          # 带这些 label 的 PR 永不自动合并
+          skip_labels="do-not-merge wip blocked hold"
+
+          if [[ -n "${REPOS_INPUT// /}" ]]; then
+            repos=$(tr ',' ' ' <<<"$REPOS_INPUT" | xargs -n1 | sed 's#^farfarfun/##; s#^#farfarfun/#')
+          else
+            repos=$(gh repo list farfarfun --limit 1000 --json nameWithOwner,isArchived \
+              --jq '.[] | select(.isArchived == false) | .nameWithOwner')
+          fi
+
+          merged=0
+          updated=0
+          skipped=0
+          failed=0
+          report=$(mktemp)
+
+          note() { printf '%s\n' "$1"; printf -- '- %s\n' "$1" >>"$report"; }
+
+          for repo in $repos; do
+            prs=$(gh pr list --repo "$repo" --state open --limit 200 \
+              --json number,headRefName,isDraft,labels \
+              --jq '[.[] | select(.isDraft == false)] | sort_by(.number) | .[] | [.number, .headRefName, ([.labels[].name] | join(","))] | @tsv' 2>/dev/null || true)
+            [[ -n "$prs" ]] || continue
+
+            while IFS=$'\t' read -r pr branch labels; do
+              [[ -n "$pr" ]] || continue
+              ref="${repo}#${pr}"
+
+              blocked=0
+              for label in $skip_labels; do
+                if grep -qiE "(^|,)${label}(,|$)" <<<"${labels:-}"; then
+                  blocked=1
+                fi
+              done
+              if [[ "$blocked" == 1 ]]; then
+                note "跳过 ${ref}：带有阻止合并的 label（${labels}）"
+                skipped=$((skipped + 1))
+                continue
+              fi
+
+              details=
+              state=unknown
+              for _ in 1 2 3; do
+                details=$(gh api "repos/${repo}/pulls/${pr}") || break
+                state=$(jq -r '.mergeable_state' <<<"$details")
+                [[ "$state" != "unknown" ]] && break
+                sleep 2
+              done
+              if [[ -z "${details:-}" ]]; then
+                note "跳过 ${ref}：读取 PR 详情失败"
+                skipped=$((skipped + 1))
+                continue
+              fi
+
+              head_owner=$(jq -r '.head.repo.owner.login // ""' <<<"$details")
+              sha=$(jq -r '.head.sha' <<<"$details")
+              if [[ "$head_owner" != "farfarfun" && "$INCLUDE_FORKS" != "true" ]]; then
+                note "跳过 ${ref}：来自 fork（${head_owner:-unknown}），未开启 include_forks"
+                skipped=$((skipped + 1))
+                continue
+              fi
+
+              if [[ "$state" == "behind" ]]; then
+                if [[ "$UPDATE_BRANCH" != "true" ]]; then
+                  note "跳过 ${ref}：分支落后，未开启 update_branch"
+                  skipped=$((skipped + 1))
+                elif [[ "$DRY_RUN" == "true" ]]; then
+                  note "将更新分支 ${ref}（分支落后）"
+                else
+                  if gh pr update-branch "$pr" --repo "$repo"; then
+                    note "已更新分支 ${ref}，下轮再合并"
+                    updated=$((updated + 1))
+                  else
+                    note "更新分支失败 ${ref}"
+                    failed=$((failed + 1))
+                  fi
+                fi
+                continue
+              fi
+
+              ok=0
+              if [[ "$state" == "clean" ]]; then
+                ok=1
+              elif [[ "$state" == "unstable" && "$REQUIRE_CHECKS" != "true" ]]; then
+                ok=1
+              fi
+              if [[ "$ok" != 1 ]]; then
+                note "跳过 ${ref}：mergeable_state=${state}"
+                skipped=$((skipped + 1))
+                continue
+              fi
+
+              if [[ "$REQUIRE_CHECKS" == "true" ]]; then
+                checks=$(gh api "repos/${repo}/commits/${sha}/check-runs") || checks=
+                if [[ -z "${checks:-}" ]]; then
+                  note "跳过 ${ref}：读取检查状态失败"
+                  skipped=$((skipped + 1))
+                  continue
+                fi
+                pending=$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"$checks")
+                bad=$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"$checks")
+                if [[ "$pending" != 0 || "$bad" != 0 ]]; then
+                  note "跳过 ${ref}：检查未通过（pending=${pending} failed=${bad}）"
+                  skipped=$((skipped + 1))
+                  continue
+                fi
+              fi
+
+              if [[ "$DRY_RUN" == "true" ]]; then
+                note "将合并 ${ref}（${branch}）"
+                merged=$((merged + 1))
+                continue
+              fi
+
+              merge_args=(--repo "$repo" "--${MERGE_METHOD}")
+              [[ "$head_owner" == "farfarfun" ]] && merge_args+=(--delete-branch)
+              if ! gh pr merge "$pr" "${merge_args[@]}"; then
+                note "合并失败 ${ref}"
+                failed=$((failed + 1))
+                continue
+              fi
+              note "已合并 ${ref}（${branch}）"
+              merged=$((merged + 1))
+
+              # 与 merge-automation-prs.yml 保持一致：收尾对应的审计 issue
+              if [[ "$branch" =~ ^automation/codex-fix-([0-9]+)- ]]; then
+                issue="${BASH_REMATCH[1]}"
+                gh issue comment "$issue" --repo farfarfun/todo-list \
+                  --body "修复 PR ${ref} 已合并。" || true
+                gh issue edit "$issue" --repo farfarfun/todo-list \
+                  --add-label fix-applied --remove-label fix-proposed || true
+                gh issue close "$issue" --repo farfarfun/todo-list || true
+              fi
+            done <<<"$prs"
+          done
+
+          {
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "## Merge all PRs（dry run，未实际合并）"
+            else
+              echo "## Merge all PRs"
+            fi
+            echo
+            echo "合并 ${merged} / 更新分支 ${updated} / 跳过 ${skipped} / 失败 ${failed}"
+            echo
+            if [[ -s "$report" ]]; then
+              cat "$report"
+            else
+              echo "- 没有符合条件的 open PR"
+            fi
+          } >>"$GITHUB_STEP_SUMMARY"
+
+          [[ "$failed" == 0 ]]
