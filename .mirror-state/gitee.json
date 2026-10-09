@@ -137,12 +137,12 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "9d0f304ca6fbc5531a33e055d471bad4e1d4463a",
-      "src_sha": "9d0f304ca6fbc5531a33e055d471bad4e1d4463a"
+      "dst_sha": "4d03928288c50d085a3a7b7d9d910713820e2b46",
+      "src_sha": "4d03928288c50d085a3a7b7d9d910713820e2b46"
     },
     "action-daily": {
-      "dst_sha": "762db7efbc702cba6108872f7779e8ec8ea1faa5",
-      "src_sha": "762db7efbc702cba6108872f7779e8ec8ea1faa5"
+      "dst_sha": "49eda4c2a5aefccf9b91045efe9ebf35b4672cc1",
+      "src_sha": "49eda4c2a5aefccf9b91045efe9ebf35b4672cc1"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -741,12 +741,12 @@
       "src_sha": "737953e72a8c77be7d1537dad636e670ce85dc70"
     },
     "utools-funlink": {
-      "dst_sha": "336ca2656f9e80e3367188da5f6fc57766cad850",
-      "src_sha": "336ca2656f9e80e3367188da5f6fc57766cad850"
+      "dst_sha": "3ef3c543b3793076976131ece7cc6f69f7644868",
+      "src_sha": "3ef3c543b3793076976131ece7cc6f69f7644868"
     },
     "utools-funotp": {
-      "dst_sha": "5bf84c1352e1453bd9af6ba54c03f038346110fa",
-      "src_sha": "5bf84c1352e1453bd9af6ba54c03f038346110fa"
+      "dst_sha": "106cb4123aa19af87833958a61902e0af0127828",
+      "src_sha": "106cb4123aa19af87833958a61902e0af0127828"
     },
     "utools-plugins": {
       "dst_sha": "eb98b1c4637c0852e569a96f97311181f8ecad23",
