@@ -4,7 +4,7 @@ All notable changes to this repository are documented in this file.
 
 ## Unreleased
 
-### Fixed
+### 修复
 
 - Stop the Codex audit with a non-zero status when one or more repository clones,
   Codex runs, or result parses fail, preventing incomplete audit results from being
@@ -25,7 +25,7 @@ All notable changes to this repository are documented in this file.
   organization-wide 3.10 baseline; the scripts never used any 3.11/3.12-only
   syntax.
 
-### Added
+### 新增
 
 - Document local installation and authentication prerequisites for the GitHub CLI
   and Codex CLI.
@@ -35,7 +35,7 @@ All notable changes to this repository are documented in this file.
 
 ## Initial release
 
-### Added
+### 新增
 
 - Scheduled Gitee mirroring and rolling Codex compliance audits for farfarfun
   repositories.

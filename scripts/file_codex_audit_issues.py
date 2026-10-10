@@ -23,6 +23,7 @@ shell 字符串（`shell=True`），拼进去就会被 shell 解析、正文损�
 
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -34,12 +35,30 @@ TITLE_PREFIX = "[codex审计]"
 MIN_CONFIDENCE = ("medium", "high")
 
 
+def redact_stderr(stderr):
+    """Remove common credential forms before emitting a gh failure message."""
+    patterns = (
+        (r"(?im)^(authorization:\s*)(.+)$", r"\1[REDACTED]"),
+        (r"(?i)\b(bearer|basic)\s+[a-z0-9_\-+/=]+", r"\1 [REDACTED]"),
+        (r"\b(?:gh[pousr]_[A-Za-z0-9_]+|github_pat_[A-Za-z0-9_]+)\b", "[REDACTED]"),
+    )
+    for pattern, replacement in patterns:
+        stderr = re.sub(pattern, replacement, stderr)
+    return stderr
+
+
 def gh(args, input_text=None):
     r = subprocess.run(
         ["gh", *args], capture_output=True, text=True, input=input_text, check=False
     )
     if r.returncode != 0:
-        print(f"  !! 失败: {' '.join(args)}\n{r.stderr}", file=sys.stderr)
+        command = " ".join(args[:2])
+        repo = args[args.index("--repo") + 1] if "--repo" in args else REPO
+        stderr = redact_stderr(r.stderr)
+        print(
+            f"  !! gh {command} 失败（repo={repo}，退出码={r.returncode}）\n{stderr}",
+            file=sys.stderr,
+        )
         return None
     return r.stdout
 
