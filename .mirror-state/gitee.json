@@ -137,16 +137,16 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "cf7098ece896d81b075f632f31c4101cdee3471d",
-      "src_sha": "cf7098ece896d81b075f632f31c4101cdee3471d"
+      "dst_sha": "1de3e8f0c04e079698878c1976fcfdc97d39d086",
+      "src_sha": "1de3e8f0c04e079698878c1976fcfdc97d39d086"
     },
     "FlClash": {
       "dst_sha": "4b59eca853778d4e7be3de26589252889c899bc5",
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "f882ceb0b823372e2d20bda5bc362406e30218ff",
-      "src_sha": "f882ceb0b823372e2d20bda5bc362406e30218ff"
+      "dst_sha": "af4c0ee8ff98292143b349b3c7c97ac6e466e855",
+      "src_sha": "af4c0ee8ff98292143b349b3c7c97ac6e466e855"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -509,16 +509,16 @@
       "src_sha": "c59500fd8ba125279718bc60dab93209bf7b0e27"
     },
     "funmodel-dwpose": {
-      "dst_sha": "9e15098baf4fdb11954ebedb55d8acaa62d5b039",
-      "src_sha": "9e15098baf4fdb11954ebedb55d8acaa62d5b039"
+      "dst_sha": "fd85e9cd71cfa335219a0e8c7944fcc59b9cdbbb",
+      "src_sha": "fd85e9cd71cfa335219a0e8c7944fcc59b9cdbbb"
     },
     "funmodel-mivolo": {
-      "dst_sha": "492a5eb89782b6ee31f2c0be7e5083b9288a2f65",
-      "src_sha": "492a5eb89782b6ee31f2c0be7e5083b9288a2f65"
+      "dst_sha": "7c3b9763ebf2f9dee401435d05efc555c84c1af0",
+      "src_sha": "7c3b9763ebf2f9dee401435d05efc555c84c1af0"
     },
     "funmodel2": {
-      "dst_sha": "76ca8884f405ba149437eb24d16c0d36e69418ec",
-      "src_sha": "76ca8884f405ba149437eb24d16c0d36e69418ec"
+      "dst_sha": "f296860a52e5faf7ee97791c7fb173be4a522595",
+      "src_sha": "f296860a52e5faf7ee97791c7fb173be4a522595"
     },
     "funmovie": {
       "dst_sha": "e34ff2b6f8941849b8269e0b9613cde8ddae47a3",
