@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "b96a66f747169f4723a08910f1d8b1a04767aae6",
-      "src_sha": "b96a66f747169f4723a08910f1d8b1a04767aae6"
+      "dst_sha": "01a9b39f6eff5eedf129c72a787578e4fd75e949",
+      "src_sha": "01a9b39f6eff5eedf129c72a787578e4fd75e949"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -233,8 +233,8 @@
       "src_sha": "f19c645446a95241a4766590bb66a1e4d9619fd1"
     },
     "funbuild": {
-      "dst_sha": "87b8e1a0931040271cdfe83d2d66612f89c8083c",
-      "src_sha": "87b8e1a0931040271cdfe83d2d66612f89c8083c"
+      "dst_sha": "2007194e5e47725d94dcf7400c9e0d45e2b9ce41",
+      "src_sha": "2007194e5e47725d94dcf7400c9e0d45e2b9ce41"
     },
     "funchallenge": {
       "dst_sha": "86d61a9373fddeae775a5bfcac787150377b5173",
@@ -289,8 +289,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "b2204ff9389f379d1e44c1059406d16b4a4062c4",
-      "src_sha": "b2204ff9389f379d1e44c1059406d16b4a4062c4"
+      "dst_sha": "0fb2519d32d7fd4f23834a29c4a54a410947ce73",
+      "src_sha": "0fb2519d32d7fd4f23834a29c4a54a410947ce73"
     },
     "fundev-api": {
       "dst_sha": "b6420b6c790e7d401531ca94bf6482370d4919e5",
@@ -349,8 +349,8 @@
       "src_sha": "51cc1fe32f87e58f9736144d1046af0b26813abd"
     },
     "funfile": {
-      "dst_sha": "8f02309b971696c176ea164656e915948a94fd66",
-      "src_sha": "8f02309b971696c176ea164656e915948a94fd66"
+      "dst_sha": "439a003817e3278614afefb78689385c00411681",
+      "src_sha": "439a003817e3278614afefb78689385c00411681"
     },
     "funflix": {
       "dst_sha": "974f797e5864fe02b2dca67f7e732c68939a8525",
@@ -385,8 +385,8 @@
       "src_sha": "76d3f1d1183e3aaedb000897e56e171491b72876"
     },
     "funget": {
-      "dst_sha": "13dfc54cac8241dfe4473b9c6a30987afd1c47ba",
-      "src_sha": "13dfc54cac8241dfe4473b9c6a30987afd1c47ba"
+      "dst_sha": "f96afcc6f1ca58509f01d56c3576e92f3a8b0af5",
+      "src_sha": "f96afcc6f1ca58509f01d56c3576e92f3a8b0af5"
     },
     "fungod": {
       "dst_sha": "849e8fcb3840ec989fa0b87570836bff91ef26a3",
@@ -497,8 +497,8 @@
       "src_sha": "733595920e1ebcaf4ec8fa3703bebb40f2e0bbb5"
     },
     "funmirror": {
-      "dst_sha": "2a0dbd65a118feeb9762cd0aa8b52a13bed0f272",
-      "src_sha": "2a0dbd65a118feeb9762cd0aa8b52a13bed0f272"
+      "dst_sha": "5db9e6c407c09b8d197ba68b5636fa178122f331",
+      "src_sha": "5db9e6c407c09b8d197ba68b5636fa178122f331"
     },
     "funmodel": {
       "dst_sha": "773f0761d85c11edd28bf49be3b53ea9d58c5bd8",
@@ -719,6 +719,10 @@
     "lanzou-gui": {
       "dst_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053",
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
+    },
+    "packages": {
+      "dst_sha": "b3fa0a5741eb555ccd2966c3fd36d6656e97dc45",
+      "src_sha": "b3fa0a5741eb555ccd2966c3fd36d6656e97dc45"
     },
     "paper-agent": {
       "dst_sha": "bbed83a437fc7098aedeece53874fa8a24a6d899",
