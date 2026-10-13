@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "a1ecb358ea968d07ecd19b096ba2a26ea5cedbff",
-      "src_sha": "a1ecb358ea968d07ecd19b096ba2a26ea5cedbff"
+      "dst_sha": "b96a66f747169f4723a08910f1d8b1a04767aae6",
+      "src_sha": "b96a66f747169f4723a08910f1d8b1a04767aae6"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -233,8 +233,8 @@
       "src_sha": "f19c645446a95241a4766590bb66a1e4d9619fd1"
     },
     "funbuild": {
-      "dst_sha": "1f168c020ca7cbb617c71daacd40eb4988798ad4",
-      "src_sha": "1f168c020ca7cbb617c71daacd40eb4988798ad4"
+      "dst_sha": "87b8e1a0931040271cdfe83d2d66612f89c8083c",
+      "src_sha": "87b8e1a0931040271cdfe83d2d66612f89c8083c"
     },
     "funchallenge": {
       "dst_sha": "86d61a9373fddeae775a5bfcac787150377b5173",
@@ -385,8 +385,8 @@
       "src_sha": "76d3f1d1183e3aaedb000897e56e171491b72876"
     },
     "funget": {
-      "dst_sha": "ada65196a133d1af954040369391307eb37e75fe",
-      "src_sha": "ada65196a133d1af954040369391307eb37e75fe"
+      "dst_sha": "13dfc54cac8241dfe4473b9c6a30987afd1c47ba",
+      "src_sha": "13dfc54cac8241dfe4473b9c6a30987afd1c47ba"
     },
     "fungod": {
       "dst_sha": "849e8fcb3840ec989fa0b87570836bff91ef26a3",
