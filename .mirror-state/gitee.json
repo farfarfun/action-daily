@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "2d209817a5bdff88b7ff85fd0c7e5313ff203c47",
-      "src_sha": "2d209817a5bdff88b7ff85fd0c7e5313ff203c47"
+      "dst_sha": "a1ecb358ea968d07ecd19b096ba2a26ea5cedbff",
+      "src_sha": "a1ecb358ea968d07ecd19b096ba2a26ea5cedbff"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -541,28 +541,28 @@
       "src_sha": "f51dea35988c0f4f00f0a59572c883451f0f2bf2"
     },
     "funpromotion": {
-      "dst_sha": "cbb7ab2f3bd80b0aa4a2cf9001de165d4a52c4d9",
-      "src_sha": "cbb7ab2f3bd80b0aa4a2cf9001de165d4a52c4d9"
+      "dst_sha": "1af34f2425c2c4564df9a329a015b49620b8afe1",
+      "src_sha": "1af34f2425c2c4564df9a329a015b49620b8afe1"
     },
     "funproxy": {
-      "dst_sha": "f41841a44a4d61b54efd962828c4c3aad874de8c",
-      "src_sha": "f41841a44a4d61b54efd962828c4c3aad874de8c"
+      "dst_sha": "dcb32cb1190518f217ac773df4899a0df60cd915",
+      "src_sha": "dcb32cb1190518f217ac773df4899a0df60cd915"
     },
     "funpub": {
-      "dst_sha": "96e8d5770ebd68aee271656ca2e819d16f166056",
-      "src_sha": "96e8d5770ebd68aee271656ca2e819d16f166056"
+      "dst_sha": "a3accf268dd8943f7ea92b790e59fbdbb801a5c8",
+      "src_sha": "a3accf268dd8943f7ea92b790e59fbdbb801a5c8"
     },
     "funpush": {
-      "dst_sha": "6e0d84138f471987acbc3f768c772b8d5d050c0d",
-      "src_sha": "6e0d84138f471987acbc3f768c772b8d5d050c0d"
+      "dst_sha": "beb52b02c92977bd141db453b35c218595ecda86",
+      "src_sha": "beb52b02c92977bd141db453b35c218595ecda86"
     },
     "funpypi": {
-      "dst_sha": "e80975ed663858c2617eb610dcc38551b22ba9ac",
-      "src_sha": "e80975ed663858c2617eb610dcc38551b22ba9ac"
+      "dst_sha": "318f59f960242879d24d957c8586c7c16de8ad16",
+      "src_sha": "318f59f960242879d24d957c8586c7c16de8ad16"
     },
     "funquery": {
-      "dst_sha": "0bbac3b8dd1d0c992176660ae8725250ce03ab4b",
-      "src_sha": "0bbac3b8dd1d0c992176660ae8725250ce03ab4b"
+      "dst_sha": "9edc25d2175131581e8de2eba543ce7d26a911a9",
+      "src_sha": "9edc25d2175131581e8de2eba543ce7d26a911a9"
     },
     "funquiz": {
       "dst_sha": "8d30be2c0716478cc47c528d9c8e033276e05e45",
