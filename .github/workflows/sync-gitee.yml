@@ -97,7 +97,7 @@ jobs:
 
       - name: Mirror farfarfun public repositories to Gitee
         if: always() && steps.repos.outputs.repo-names != ''
-        uses: farfarfun-action/mirror-repo@v1
+        uses: farfarfun-action/mirror-repo@v1.1.0
         env:
           PYTHONUNBUFFERED: "1"
         with:
