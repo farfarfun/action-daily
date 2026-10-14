@@ -137,16 +137,16 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "a622dd46ad42d921cb82e4c3e11021d64bf3fd17",
-      "src_sha": "a622dd46ad42d921cb82e4c3e11021d64bf3fd17"
+      "dst_sha": "60af9127b0ea6b7a0010ecde8085556a838c8a8a",
+      "src_sha": "60af9127b0ea6b7a0010ecde8085556a838c8a8a"
     },
     "FlClash": {
       "dst_sha": "4b59eca853778d4e7be3de26589252889c899bc5",
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "85b7b6391be548c7c522122cefaf8e8c44b9bb86",
-      "src_sha": "85b7b6391be548c7c522122cefaf8e8c44b9bb86"
+      "dst_sha": "0c15bb461433dc8964bf8447a7425c9e23d213c3",
+      "src_sha": "0c15bb461433dc8964bf8447a7425c9e23d213c3"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
@@ -289,8 +289,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "53c0980958146485dcc7a049c4e05c6ee2c2b858",
-      "src_sha": "53c0980958146485dcc7a049c4e05c6ee2c2b858"
+      "dst_sha": "2a40e1c28919a1620ac702f9d0118db68859a3bc",
+      "src_sha": "2a40e1c28919a1620ac702f9d0118db68859a3bc"
     },
     "fundev-api": {
       "dst_sha": "b6420b6c790e7d401531ca94bf6482370d4919e5",
@@ -721,8 +721,8 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "packages": {
-      "dst_sha": "02068f1f19d9a72062a61107971b1c6723d29327",
-      "src_sha": "02068f1f19d9a72062a61107971b1c6723d29327"
+      "dst_sha": "846f5d520a1909bc6459e0f28198f5bdd2a9f9d0",
+      "src_sha": "846f5d520a1909bc6459e0f28198f5bdd2a9f9d0"
     },
     "paper-agent": {
       "dst_sha": "bbed83a437fc7098aedeece53874fa8a24a6d899",
