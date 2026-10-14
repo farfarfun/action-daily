@@ -2,7 +2,12 @@ name: Merge automation PRs
 
 on:
   schedule:
-    - cron: "7,22,37,52 * * * *"
+    # 原来是 "7,22,37,52 * * * *"，一天请求 96 次。实测拿到 4.4 次。
+    # 本仓库的定时配额见下面 sync-gitee 那段注释：发车数跟请求数无关，96 次和
+    # 24 次拿到的一样多（codex-fix-issues 请求 24 次，同样是三四次）。那就别占
+    # 着那 92 次不发车的名额——GitHub 对超额请求的仓库会整体降权，少要点对同一
+    # 个仓库里的其它定时任务只有好处。
+    - cron: "7 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -71,3 +76,52 @@ jobs:
               fi
             done <<<"$prs"
           done
+
+      # 顺带捎一程。这个 job 每跑到一次，就是 GitHub 真的发给本仓库的一个时间片；
+      # sync-gitee 自己一天只摇到四五次，而它维护的是一百多个仓库的 Gitee 镜像，
+      # 国内访问全靠那边。这儿把本来就到手的时间片分它一点：隔了两小时以上就替
+      # 它打一下。
+      #
+      # workflow_dispatch 是「一定会跑」的，不受定时那套配额约束——这正是定时不
+      # 可靠时唯一还能指望的触发方式。
+      #
+      # 放在 always() 上：上面合 PR 那段跨一百多个仓库，个别仓库出错不该连累镜像。
+      - name: 顺带捅一下 sync-gitee
+        if: always()
+        run: |
+          set -euo pipefail
+          WF=repos/farfarfun/action-daily/actions/workflows/sync-gitee.yml/runs
+
+          # 已经有一轮在跑或排队就别再添。concurrency 会让它们排队而不是并行，
+          # 但全量一轮最长 180 分钟，排上三轮纯属浪费。
+          busy=$(gh api "$WF?per_page=10" --jq '[.workflow_runs[] | select(.status != "completed")] | length')
+          if [[ "$busy" -gt 0 ]]; then
+            echo "已经有 $busy 轮在跑或排队，不打。"
+            exit 0
+          fi
+
+          now=$(date -u +%s)
+          age_of() {  # 距今多少分钟；查不到就回一个足够大的数
+            [[ -n "$1" ]] || { echo 99999; return; }
+            echo $(( (now - $(date -u -d "$1" +%s)) / 60 ))
+          }
+
+          runs=$(gh api "$WF?per_page=50&status=success")
+          last=$(jq -r '.workflow_runs[0].created_at // empty' <<<"$runs")
+          # 档位写在运行标题里，见 sync-gitee.yml 顶上的 run-name
+          last_full=$(jq -r '[.workflow_runs[] | select(.display_title | contains("全量"))][0].created_at // empty' <<<"$runs")
+
+          age=$(age_of "$last"); age_full=$(age_of "$last_full")
+          echo "上次成功同步 ${age} 分钟前；上次全量 ${age_full} 分钟前"
+
+          # 全量那条 cron 一天只请求一个时间片，按本仓库的配额大概三天才轮到一次，
+          # 而它正是用来修增量跑留下的状态漂移的。超过一天没全量就点名要一次。
+          if [[ "$age_full" -ge 1440 ]]; then
+            gh workflow run sync-gitee.yml --repo farfarfun/action-daily -f full=true
+            echo "已请求一次全量同步。"
+          elif [[ "$age" -ge 120 ]]; then
+            gh workflow run sync-gitee.yml --repo farfarfun/action-daily
+            echo "已请求一次增量同步。"
+          else
+            echo "两小时内刚同步过，不打。"
+          fi

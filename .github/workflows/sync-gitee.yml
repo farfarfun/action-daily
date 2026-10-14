@@ -1,14 +1,37 @@
 name: Mirror to Gitee
 
+# 把档位写进运行标题。一是列表里一眼看得出这轮是全量还是增量（原先每一行都长
+# 得一模一样），二是 merge-automation-prs 靠标题里这两个字判断「上次全量是什么
+# 时候」——全量和增量在 API 返回里没有别的地方分得开。
+#
+# 这个判断条件在本文件里出现三次：这儿、timeout-minutes、下面那步 Decide。三处
+# 必须一致，改一处就得改三处——job 级的 timeout 在步骤跑之前就要定，拿不到步骤
+# 的输出，run-name 更早，所以合不成一处。
+#
+# 表达式整条写在一行：`${{ }}` 里带真换行是没有文档保证的，YAML 这边一不小心
+# （续行缩进比首行深）就会把换行原样留下来喂进去。
+run-name: "Mirror to Gitee（${{ (github.event.schedule == '53 19 * * *' || inputs.full == true || github.event.client_payload.full == true) && '全量' || '增量' }}）"
+
 on:
   push:
     branches:
       - main
     paths-ignore:
       - '.mirror-state/**'
+  # 下面这两条 cron 写的是「每两小时一次 + 每天全量一次」，实际拿不到这么多。
+  # 2026-10 连续十天实测：本仓库四个 cron workflow 一共请求 138 次/天，真正发车
+  # 12~18 次（均值约 16）。而且四个各自拿到三五次，跟各自请求 96 次还是 13 次
+  # 无关——分蛋糕的是「有几个 cron workflow」，不是「请求了多少次」。
+  #
+  # 所以：**往这儿加 cron 不会让同步变勤，只会把别人的份也摊薄。**要让它跑得勤
+  # 一点，正确的做法是走 workflow_dispatch / repository_dispatch——那两个是文档
+  # 明确说「一定会创建运行」的，不受上面这套配额约束。merge-automation-prs 末尾
+  # 就有一步在替这儿打（它自己摇到的时间片分一点过来）。
   schedule:
-    - cron: "17 */2 * * *"  # incremental, every 2 hours (unchanged cadence, off the :00 mark)
-    - cron: "53 19 * * *"   # daily full sync (03:53 Asia/Shanghai) -- re-verifies every repo against Gitee and self-heals any state drift left by an incremental run
+    - cron: "17 */2 * * *"  # 增量；实测约每 5 小时轮到一次
+    - cron: "53 19 * * *"   # 全量（03:53 Asia/Shanghai），重新逐仓库核对、修掉增量跑留下的状态漂移
+  repository_dispatch:
+    types: [mirror-now]
   workflow_dispatch:
     inputs:
       full:
@@ -29,7 +52,11 @@ jobs:
     runs-on: ubuntu-latest
     # 129+ 个仓库全量 force-push 镜像，个别大仓库单仓库重试三次就要吃掉较长时间；
     # 全量档留够余量，增量档大部分仓库会被 state 文件短路，不需要这么久。
-    timeout-minutes: ${{ github.event.schedule == '53 19 * * *' && 180 || 60 }}
+    # 判断条件必须和下面「Decide incremental vs full sync」那步一字不差，否则
+    # 点名要的全量会被卡在 60 分钟上——原先漏了 inputs.full，手动全量就是这样。
+    timeout-minutes: ${{ (github.event.schedule == '53 19 * * *'
+                       || inputs.full == true
+                       || github.event.client_payload.full == true) && 180 || 60 }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,9 +77,16 @@ jobs:
 
       - name: Decide incremental vs full sync
         id: mode
+        # 全量那条 cron 一天只请求一个时间片，按上面的配额算大概三天才轮到一次，
+        # 而它是用来修状态漂移的。所以 dispatch 也能点名要全量：真拖久了，由打过
+        # 来的那一方判断并带上 full。
+        #
+        # 走 env 而不是在 run 里直接插值：`${{ }}` 展开成什么就原样进 shell，当成
+        # 变量传进去才不用操心引号；顺带这行也就能单行写完，不触上面那个换行坑。
+        env:
+          FULL: ${{ github.event.schedule == '53 19 * * *' || inputs.full == true || github.event.client_payload.full == true }}
         run: |
-          full="${{ github.event.schedule == '53 19 * * *' || inputs.full == true }}"
-          if [[ "$full" == "true" ]]; then
+          if [[ "$FULL" == "true" ]]; then
             echo "incremental=false" >> "$GITHUB_OUTPUT"
             echo "workers=2" >> "$GITHUB_OUTPUT"
           else
