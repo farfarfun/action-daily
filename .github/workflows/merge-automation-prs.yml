@@ -50,7 +50,7 @@ jobs:
               [[ "$owner" == "farfarfun" ]] || continue
               if [[ "$branch" == automation/gitee-state-* && "$state" != "clean" ]]; then
                 gh pr close "$pr" --repo "$repo" --delete-branch \
-                  --comment "该镜像状态快照已被后续 main 更新取代；下次同步会基于最新状态重新生成。"
+                  --comment "该镜像状态快照已被后续 master 更新取代；下次同步会基于最新状态重新生成。"
                 continue
               fi
               if [[ "$state" == "behind" ]]; then

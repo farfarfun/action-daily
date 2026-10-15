@@ -15,7 +15,7 @@ run-name: "Mirror to Gitee（${{ (github.event.schedule == '53 19 * * *' || inpu
 on:
   push:
     branches:
-      - main
+      - master
     paths-ignore:
       - '.mirror-state/**'
   # 下面这两条 cron 写的是「每两小时一次 + 每天全量一次」，实际拿不到这么多。
@@ -125,14 +125,14 @@ jobs:
           state_file=$(mktemp)
           cp .mirror-state/gitee.json "$state_file"
           branch="automation/gitee-state-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          git fetch origin main
-          git switch -c "$branch" origin/main
+          git fetch origin master
+          git switch -c "$branch" origin/master
           cp "$state_file" .mirror-state/gitee.json
           git add .mirror-state/gitee.json
           git commit -m 'chore: 更新 Gitee 镜像状态 [skip ci]'
           git push -u origin "$branch"
           gh pr create \
-            --base main \
+            --base master \
             --head "$branch" \
             --title "chore: 更新 Gitee 镜像状态 [skip ci]" \
             --body "由 Gitee 镜像运行 ${GITHUB_RUN_ID} 自动生成。"
