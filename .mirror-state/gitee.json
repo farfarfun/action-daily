@@ -145,12 +145,16 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "c603dd7a5a150942cd1284f759ff595da3ac1b83",
-      "src_sha": "c603dd7a5a150942cd1284f759ff595da3ac1b83"
+      "dst_sha": "0bf1f2645c54df04d77ee8a7edd13814f0da8208",
+      "src_sha": "0bf1f2645c54df04d77ee8a7edd13814f0da8208"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
       "src_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889"
+    },
+    "clash": {
+      "dst_sha": "06ed6fc4e68a794ca70438b5c51f3f76dc6e7693",
+      "src_sha": "06ed6fc4e68a794ca70438b5c51f3f76dc6e7693"
     },
     "data-juicer": {
       "dst_sha": "2fb2167831993c60d2eb6de48ca3fe8d9e9aa406",
@@ -245,8 +249,12 @@
       "src_sha": "ad0582f7c7b31c551008cbc348254f020968c8f0"
     },
     "funclash": {
-      "dst_sha": "82b4c7ccdbba2610b19f3a8b4a138069ac34fc57",
-      "src_sha": "82b4c7ccdbba2610b19f3a8b4a138069ac34fc57"
+      "dst_sha": "aed30d4db4706211b202df7a697e4e80d0d183d0",
+      "src_sha": "aed30d4db4706211b202df7a697e4e80d0d183d0"
+    },
+    "funclash-core": {
+      "dst_sha": "008b91bfe8c0e2daca0ab69061efd9ea1ad71bd2",
+      "src_sha": "008b91bfe8c0e2daca0ab69061efd9ea1ad71bd2"
     },
     "funcode": {
       "dst_sha": "b67445dbb9503b6a30822b6c098c08d3a88119f7",
