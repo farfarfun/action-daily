@@ -145,12 +145,16 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "c603dd7a5a150942cd1284f759ff595da3ac1b83",
-      "src_sha": "c603dd7a5a150942cd1284f759ff595da3ac1b83"
+      "dst_sha": "0bf1f2645c54df04d77ee8a7edd13814f0da8208",
+      "src_sha": "0bf1f2645c54df04d77ee8a7edd13814f0da8208"
     },
     "cachedata": {
       "dst_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889",
       "src_sha": "a433ebea9074c0bd1bef5aacb9d0fe0655f40889"
+    },
+    "clash": {
+      "dst_sha": "06ed6fc4e68a794ca70438b5c51f3f76dc6e7693",
+      "src_sha": "06ed6fc4e68a794ca70438b5c51f3f76dc6e7693"
     },
     "data-juicer": {
       "dst_sha": "2fb2167831993c60d2eb6de48ca3fe8d9e9aa406",
