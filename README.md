@@ -54,7 +54,7 @@ open/closed 状态不变）。
 需要的 Actions secrets：`ACTION_GITHUB_TOKEN`（跨仓库读写 issue 与 clone 私有仓库）、
 `OPENAI_API_KEY`、`OPENAI_BASE_URL`（走自定义/代理的 OpenAI 兼容端点）。
 
-### 本地运行
+### 快速开始：本地运行
 
 脚本只用 Python 标准库（`>=3.10`，与组织统一下限一致，未用到 3.11/3.12 专属语法），
 不需要安装 Python 依赖。本地运行前安装
