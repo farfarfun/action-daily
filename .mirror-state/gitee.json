@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "86e0345e49e10baae32ced9b1560a656d6b4cf84",
-      "src_sha": "86e0345e49e10baae32ced9b1560a656d6b4cf84"
+      "dst_sha": "76e038c3abaa6ab3332177eb6653d63778f80e51",
+      "src_sha": "76e038c3abaa6ab3332177eb6653d63778f80e51"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -249,8 +249,8 @@
       "src_sha": "c83a548fad73cc51e73be68cc5d7ca1dbc7bba51"
     },
     "funclash": {
-      "dst_sha": "1e7e47f4088058354eca38e9a8c2dcdf39362a73",
-      "src_sha": "1e7e47f4088058354eca38e9a8c2dcdf39362a73"
+      "dst_sha": "1c28146aff12b5ae22b51202e06cd355346af97d",
+      "src_sha": "1c28146aff12b5ae22b51202e06cd355346af97d"
     },
     "funclash-bak": {
       "dst_sha": "ab1864d540a5c54a0627fcb4f37a98f6c79caf19",
@@ -589,12 +589,12 @@
       "src_sha": "8263ea4ab1bf5a96a8288a46a105c007ddf7924d"
     },
     "funread": {
-      "dst_sha": "4f7d9b89135d26bad614d2e9e6c535509ed7bc79",
-      "src_sha": "4f7d9b89135d26bad614d2e9e6c535509ed7bc79"
+      "dst_sha": "8d5c230a410ec0555ee3bf0f9f98145f3cfb94cf",
+      "src_sha": "8d5c230a410ec0555ee3bf0f9f98145f3cfb94cf"
     },
     "funread-api": {
-      "dst_sha": "71478a0d8a0e5881914151d9ee2a6cb372da2644",
-      "src_sha": "71478a0d8a0e5881914151d9ee2a6cb372da2644"
+      "dst_sha": "73a8ace9cd89128a9cb985a9438d55ce9e94d503",
+      "src_sha": "73a8ace9cd89128a9cb985a9438d55ce9e94d503"
     },
     "funread-cache": {
       "dst_sha": "170432300f9f069a792ff7c7d43085567d524976",
@@ -605,12 +605,12 @@
       "src_sha": "ee9fc4d6bc4958df5dc5769769eb00ce66c7dd49"
     },
     "funread-dev": {
-      "dst_sha": "a1b00eda52b3051617d469e6b37cfd7e0f22479d",
-      "src_sha": "a1b00eda52b3051617d469e6b37cfd7e0f22479d"
+      "dst_sha": "c579f84c2ef9bce463612874a01b81df9f8fe0b3",
+      "src_sha": "c579f84c2ef9bce463612874a01b81df9f8fe0b3"
     },
     "funread-web": {
-      "dst_sha": "55068b71d63f91898639f1d20ed6d521e06c1e1d",
-      "src_sha": "55068b71d63f91898639f1d20ed6d521e06c1e1d"
+      "dst_sha": "9753aeae0d2c25cf303f41aafb1173309501c89a",
+      "src_sha": "9753aeae0d2c25cf303f41aafb1173309501c89a"
     },
     "funrec": {
       "dst_sha": "39b5116bdcf2010571973da6997c5294505dc8d4",
@@ -741,8 +741,8 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "packages": {
-      "dst_sha": "289893fb7629a3b595350be993b1d9d80f1f1fe6",
-      "src_sha": "289893fb7629a3b595350be993b1d9d80f1f1fe6"
+      "dst_sha": "3e3d312568d57bf34e52e970cc3968cd5c7f7295",
+      "src_sha": "3e3d312568d57bf34e52e970cc3968cd5c7f7295"
     },
     "paper-agent": {
       "dst_sha": "33d60a6175104ad6a2e762e96c0c9931b92c9c80",
