@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "c803b178895c75a5ce32ff7f791dd37901ea2c41",
-      "src_sha": "c803b178895c75a5ce32ff7f791dd37901ea2c41"
+      "dst_sha": "c138e1b1ed5188a98d0b232a2dffc76be86ddf94",
+      "src_sha": "c138e1b1ed5188a98d0b232a2dffc76be86ddf94"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -589,12 +589,12 @@
       "src_sha": "8263ea4ab1bf5a96a8288a46a105c007ddf7924d"
     },
     "funread": {
-      "dst_sha": "3a5a24500c4688f34b7c62f6c43bc4287dfcb53d",
-      "src_sha": "3a5a24500c4688f34b7c62f6c43bc4287dfcb53d"
+      "dst_sha": "6c7c326791120d2be0157e35f51d9301b9b63b4a",
+      "src_sha": "6c7c326791120d2be0157e35f51d9301b9b63b4a"
     },
     "funread-api": {
-      "dst_sha": "ade3f0fb38d0edf8bd688ce2517637b7a06d01c8",
-      "src_sha": "ade3f0fb38d0edf8bd688ce2517637b7a06d01c8"
+      "dst_sha": "cb6e5d16418982591fe467372ac9b8ef0b2786d4",
+      "src_sha": "cb6e5d16418982591fe467372ac9b8ef0b2786d4"
     },
     "funread-cache": {
       "dst_sha": "170432300f9f069a792ff7c7d43085567d524976",
@@ -605,12 +605,12 @@
       "src_sha": "ee9fc4d6bc4958df5dc5769769eb00ce66c7dd49"
     },
     "funread-dev": {
-      "dst_sha": "62c33f5193de1a78ead45376822ccf9b221a659b",
-      "src_sha": "62c33f5193de1a78ead45376822ccf9b221a659b"
+      "dst_sha": "1a92e3b8c8aade989a8591db45a5c812e1cce79f",
+      "src_sha": "1a92e3b8c8aade989a8591db45a5c812e1cce79f"
     },
     "funread-web": {
-      "dst_sha": "fd18bcdbba48f86f505644f165f6be90b9d2e048",
-      "src_sha": "fd18bcdbba48f86f505644f165f6be90b9d2e048"
+      "dst_sha": "6c732237127d9bb1f4cdbcacb7ce03b878895879",
+      "src_sha": "6c732237127d9bb1f4cdbcacb7ce03b878895879"
     },
     "funrec": {
       "dst_sha": "39b5116bdcf2010571973da6997c5294505dc8d4",
