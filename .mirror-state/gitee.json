@@ -137,16 +137,16 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "1b238b5608fda13059231b49eb1c5138860c51cc",
-      "src_sha": "1b238b5608fda13059231b49eb1c5138860c51cc"
+      "dst_sha": "38023c2683dfa77eefa122abe674b4b296226bfc",
+      "src_sha": "38023c2683dfa77eefa122abe674b4b296226bfc"
     },
     "FlClash": {
       "dst_sha": "4b59eca853778d4e7be3de26589252889c899bc5",
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "69a8d4f74ae62f67551368a3cbe2f9c33aa7259b",
-      "src_sha": "69a8d4f74ae62f67551368a3cbe2f9c33aa7259b"
+      "dst_sha": "a5712fc821d2957ba187d9483796c5f5e2b52808",
+      "src_sha": "a5712fc821d2957ba187d9483796c5f5e2b52808"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
