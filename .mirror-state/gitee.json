@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "c138e1b1ed5188a98d0b232a2dffc76be86ddf94",
-      "src_sha": "c138e1b1ed5188a98d0b232a2dffc76be86ddf94"
+      "dst_sha": "e0f19cb3ff0df7b5770b12c78066d8a6d5b12958",
+      "src_sha": "e0f19cb3ff0df7b5770b12c78066d8a6d5b12958"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -177,8 +177,8 @@
       "src_sha": "515f1f7a4683c49a4ce07db2f43da9681b895ac9"
     },
     "farlog": {
-      "dst_sha": "4cbe35c2b23ec5003d5b4c96893356497eb181f6",
-      "src_sha": "4cbe35c2b23ec5003d5b4c96893356497eb181f6"
+      "dst_sha": "bbc917fa43b4710dc5aa0fa07e3f52301ada5069",
+      "src_sha": "bbc917fa43b4710dc5aa0fa07e3f52301ada5069"
     },
     "farspec": {
       "dst_sha": "7401f338002ce5dd3833e84f20cf1de2fd649888",
