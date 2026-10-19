@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "cb2ade2fe35118e24acbfe006b30015065b21b94",
-      "src_sha": "cb2ade2fe35118e24acbfe006b30015065b21b94"
+      "dst_sha": "6bf10ab74f040651a315de8e86323ec9141ab3ad",
+      "src_sha": "6bf10ab74f040651a315de8e86323ec9141ab3ad"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -305,8 +305,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "4e6e52ba5f3257d2a31a935ee242231285bd6d8d",
-      "src_sha": "4e6e52ba5f3257d2a31a935ee242231285bd6d8d"
+      "dst_sha": "6fbd419692ea69a14a236302aecdc99f410f30d3",
+      "src_sha": "6fbd419692ea69a14a236302aecdc99f410f30d3"
     },
     "fundev-api": {
       "dst_sha": "b6420b6c790e7d401531ca94bf6482370d4919e5",
@@ -589,12 +589,12 @@
       "src_sha": "8263ea4ab1bf5a96a8288a46a105c007ddf7924d"
     },
     "funread": {
-      "dst_sha": "6c7c326791120d2be0157e35f51d9301b9b63b4a",
-      "src_sha": "6c7c326791120d2be0157e35f51d9301b9b63b4a"
+      "dst_sha": "b9941ac6113c17a0220989c6f73d487c15a2d079",
+      "src_sha": "b9941ac6113c17a0220989c6f73d487c15a2d079"
     },
     "funread-api": {
-      "dst_sha": "cb6e5d16418982591fe467372ac9b8ef0b2786d4",
-      "src_sha": "cb6e5d16418982591fe467372ac9b8ef0b2786d4"
+      "dst_sha": "0eb7b11fe44533fffeabf227cb967337ca7e017a",
+      "src_sha": "0eb7b11fe44533fffeabf227cb967337ca7e017a"
     },
     "funread-cache": {
       "dst_sha": "170432300f9f069a792ff7c7d43085567d524976",
@@ -605,12 +605,12 @@
       "src_sha": "ee9fc4d6bc4958df5dc5769769eb00ce66c7dd49"
     },
     "funread-dev": {
-      "dst_sha": "1a92e3b8c8aade989a8591db45a5c812e1cce79f",
-      "src_sha": "1a92e3b8c8aade989a8591db45a5c812e1cce79f"
+      "dst_sha": "63b19049a4ecdc6dd709657143f24f83c242f32f",
+      "src_sha": "63b19049a4ecdc6dd709657143f24f83c242f32f"
     },
     "funread-web": {
-      "dst_sha": "6c732237127d9bb1f4cdbcacb7ce03b878895879",
-      "src_sha": "6c732237127d9bb1f4cdbcacb7ce03b878895879"
+      "dst_sha": "5a2a4fc05e01ecf478d761f4a9f8d5a09b9e346e",
+      "src_sha": "5a2a4fc05e01ecf478d761f4a9f8d5a09b9e346e"
     },
     "funrec": {
       "dst_sha": "39b5116bdcf2010571973da6997c5294505dc8d4",
@@ -741,8 +741,8 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "packages": {
-      "dst_sha": "e6310de339708552f034816cb61b052ca81fc815",
-      "src_sha": "e6310de339708552f034816cb61b052ca81fc815"
+      "dst_sha": "773da0e5ffcd4d6d1a45637d3da636f38438bdcb",
+      "src_sha": "773da0e5ffcd4d6d1a45637d3da636f38438bdcb"
     },
     "paper-agent": {
       "dst_sha": "33d60a6175104ad6a2e762e96c0c9931b92c9c80",
