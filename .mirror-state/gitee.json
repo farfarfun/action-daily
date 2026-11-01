@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "e7e8239553eb18005ef4ce9c20678b34e38db9bf",
-      "src_sha": "e7e8239553eb18005ef4ce9c20678b34e38db9bf"
+      "dst_sha": "1e8bb137f6299b9aa8cfe17b61e47a1ff5e3b284",
+      "src_sha": "1e8bb137f6299b9aa8cfe17b61e47a1ff5e3b284"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -497,16 +497,16 @@
       "src_sha": "9759f0798998d1a69fcb7d4c73c02bce71755aba"
     },
     "funmill-api": {
-      "dst_sha": "46a6a67db1b8b794c44769cc8f6769324d5bb35f",
-      "src_sha": "46a6a67db1b8b794c44769cc8f6769324d5bb35f"
+      "dst_sha": "6cefbcfa12ea71168743da09841b969cf38befa8",
+      "src_sha": "6cefbcfa12ea71168743da09841b969cf38befa8"
     },
     "funmill-dev": {
-      "dst_sha": "6b0e37098a21778f21d5d3aaf498ef79c6319350",
-      "src_sha": "6b0e37098a21778f21d5d3aaf498ef79c6319350"
+      "dst_sha": "207698f141e855596c0dd2c3153ac58eec13a801",
+      "src_sha": "207698f141e855596c0dd2c3153ac58eec13a801"
     },
     "funmill-sdk": {
-      "dst_sha": "9c9dce2e7933a383da9715bba487215de6d6ed22",
-      "src_sha": "9c9dce2e7933a383da9715bba487215de6d6ed22"
+      "dst_sha": "7a2816b9638a92fb6508ff73c151ec53e998a7d9",
+      "src_sha": "7a2816b9638a92fb6508ff73c151ec53e998a7d9"
     },
     "funmind": {
       "dst_sha": "dd05bad82f120bca5c0c98cef2e8b3d76f2126ea",
