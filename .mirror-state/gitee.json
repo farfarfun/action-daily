@@ -137,16 +137,16 @@
   "funworker": "577899bf1392eb8ac0541b49f4b4c85a5a5eb48b",
   "github/farfarfun::gitee/farfarfun": {
     ".github": {
-      "dst_sha": "291be78648a75d756ea5499220e4ae945059236a",
-      "src_sha": "291be78648a75d756ea5499220e4ae945059236a"
+      "dst_sha": "b0915330bb901208953c4027a545c16c9654f4a9",
+      "src_sha": "b0915330bb901208953c4027a545c16c9654f4a9"
     },
     "FlClash": {
       "dst_sha": "4b59eca853778d4e7be3de26589252889c899bc5",
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "5dd03b08944be79ee61a1f43121ee588ea373412",
-      "src_sha": "5dd03b08944be79ee61a1f43121ee588ea373412"
+      "dst_sha": "67e7c6ced3243b73cb9995920c127732d30b472e",
+      "src_sha": "67e7c6ced3243b73cb9995920c127732d30b472e"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -237,8 +237,8 @@
       "src_sha": "f19c645446a95241a4766590bb66a1e4d9619fd1"
     },
     "funbuild": {
-      "dst_sha": "1118080603793535dae83edc6cf41dd415c94433",
-      "src_sha": "1118080603793535dae83edc6cf41dd415c94433"
+      "dst_sha": "44abe78079c1190de25c6ebc081c745c6ab15e0f",
+      "src_sha": "44abe78079c1190de25c6ebc081c745c6ab15e0f"
     },
     "funchallenge": {
       "dst_sha": "f2dea044a667af8124578aeeb77bc779fe5773f7",
@@ -305,8 +305,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "9b9d62bc011b510688371f0942546c8b6f9c25a6",
-      "src_sha": "9b9d62bc011b510688371f0942546c8b6f9c25a6"
+      "dst_sha": "6e6edfc40583e0d5155dbaadb9f2098cede73ec6",
+      "src_sha": "6e6edfc40583e0d5155dbaadb9f2098cede73ec6"
     },
     "fundev-api": {
       "dst_sha": "b6420b6c790e7d401531ca94bf6482370d4919e5",
@@ -741,8 +741,8 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "packages": {
-      "dst_sha": "7870d86f13e2ad9a8db4c1b514ba1bbbe0f1c675",
-      "src_sha": "7870d86f13e2ad9a8db4c1b514ba1bbbe0f1c675"
+      "dst_sha": "43589f142ceded4556a025fc20e670de3496b3df",
+      "src_sha": "43589f142ceded4556a025fc20e670de3496b3df"
     },
     "paper-agent": {
       "dst_sha": "33d60a6175104ad6a2e762e96c0c9931b92c9c80",
