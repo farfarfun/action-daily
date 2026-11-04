@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "c5cd8f898858351de611fdcb6978484919db0148",
-      "src_sha": "c5cd8f898858351de611fdcb6978484919db0148"
+      "dst_sha": "fefca7d2bcd6b3a9ffd2d3a9b063a89b25f742a4",
+      "src_sha": "fefca7d2bcd6b3a9ffd2d3a9b063a89b25f742a4"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -225,8 +225,8 @@
       "src_sha": "b1e9b9a3f597c1dadd4b59d53b68169bf9de2382"
     },
     "funauth": {
-      "dst_sha": "6fb4524d3d2c5ead69b9a255cdb90210851684c7",
-      "src_sha": "6fb4524d3d2c5ead69b9a255cdb90210851684c7"
+      "dst_sha": "d05213025aed48c67e1a5853af87fa96ce7adf71",
+      "src_sha": "d05213025aed48c67e1a5853af87fa96ce7adf71"
     },
     "funbattle": {
       "dst_sha": "e715a2d6deb503913a062399e3a7578db306f94f",
