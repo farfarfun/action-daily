@@ -107,6 +107,8 @@ jobs:
       - name: 提交游标状态 PR
         if: ${{ !cancelled() && github.event.inputs.repos == '' && steps.file.outcome == 'success' }}
         run: |
+          # 全部扫描失败时，保留当前游标供下轮重试。
+          jq -e 'length > 0' scripts/codex_audit_findings.json >/dev/null || exit 0
           git config user.name "farfarfun-bot"
           git config user.email "farfarfun@qq.com"
           git add scripts/codex_audit_cursor.json
