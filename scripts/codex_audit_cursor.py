@@ -86,10 +86,30 @@ def repos_with_open_issue():
     return names
 
 
+def visible_repos():
+    out = gh(["repo", "list", "farfarfun", "--limit", "300", "--json", "name,isArchived"])
+    if out is None:
+        print("查询当前可访问的仓库失败，终止本轮", file=sys.stderr)
+        sys.exit(1)
+    repos = json.loads(out)
+    if not repos:
+        print("当前 token 看不到任何仓库，终止本轮", file=sys.stderr)
+        sys.exit(1)
+    return {r["name"] for r in repos if not r["isArchived"]}
+
+
 def main():
     with open(MAPPING_PATH, encoding="utf-8") as f:
         repos = json.load(f)
-    names = [r["repo"] for r in repos if not r.get("archived")]
+    visible = visible_repos()
+    missing = [r["repo"] for r in repos if not r.get("archived") and r["repo"] not in visible]
+    if missing:
+        print(
+            "映射中的仓库对当前 token 不可见，需核对是否删除、迁移或缺少权限："
+            + ", ".join(missing),
+            file=sys.stderr,
+        )
+    names = [r["repo"] for r in repos if r["repo"] in visible]
     if not names:
         print("mapping.json 里没有可扫描的仓库", file=sys.stderr)
         sys.exit(1)
