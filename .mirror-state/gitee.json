@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "6ebbdd2ae033952e0ae8419e27a4f2f81aa6546c",
-      "src_sha": "6ebbdd2ae033952e0ae8419e27a4f2f81aa6546c"
+      "dst_sha": "b2f9d2a348ed67e55d509c6247e349cc0fd90d8d",
+      "src_sha": "b2f9d2a348ed67e55d509c6247e349cc0fd90d8d"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
