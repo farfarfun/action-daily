@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "3196275affad6a41968b2f51709dd6f60fe36e17",
-      "src_sha": "3196275affad6a41968b2f51709dd6f60fe36e17"
+      "dst_sha": "f4e6457206131ae66cabf9e7acf9b95d2ba6c128",
+      "src_sha": "f4e6457206131ae66cabf9e7acf9b95d2ba6c128"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -305,8 +305,8 @@
       "src_sha": "dd8fdfef67c5b829ae5a5b07c9d4ab439b3e5ffe"
     },
     "fundeploy": {
-      "dst_sha": "7da2995acff45e5e508764fa15784d1b683807f7",
-      "src_sha": "7da2995acff45e5e508764fa15784d1b683807f7"
+      "dst_sha": "a4d4d93482a67aa05403a73b94102ecc833c3a1d",
+      "src_sha": "a4d4d93482a67aa05403a73b94102ecc833c3a1d"
     },
     "fundev-api": {
       "dst_sha": "b6420b6c790e7d401531ca94bf6482370d4919e5",
@@ -741,8 +741,8 @@
       "src_sha": "b1f483211ec545f5eab382ec01e16a6f8d3f6053"
     },
     "packages": {
-      "dst_sha": "395f89e06d5353efacc9e29cf42810f17bd6057f",
-      "src_sha": "395f89e06d5353efacc9e29cf42810f17bd6057f"
+      "dst_sha": "5cf80e2e370330220604c2f8c08bb2a731eca55b",
+      "src_sha": "5cf80e2e370330220604c2f8c08bb2a731eca55b"
     },
     "paper-agent": {
       "dst_sha": "33d60a6175104ad6a2e762e96c0c9931b92c9c80",
