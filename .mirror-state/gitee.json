@@ -145,8 +145,8 @@
       "src_sha": "4b59eca853778d4e7be3de26589252889c899bc5"
     },
     "action-daily": {
-      "dst_sha": "d581649a9b728ccd0f25ff896a68aa1f98b39741",
-      "src_sha": "d581649a9b728ccd0f25ff896a68aa1f98b39741"
+      "dst_sha": "9a019938fc4d60fd281bb14d7888b3862adc9f35",
+      "src_sha": "9a019938fc4d60fd281bb14d7888b3862adc9f35"
     },
     "cachedata": {
       "dst_sha": "07057689e2f1e5e561fa5a676191b2e32167400f",
@@ -645,8 +645,8 @@
       "src_sha": "8005e44adea592ec2f9bb27853ed0a3c10b348ee"
     },
     "funsecret": {
-      "dst_sha": "af61b7f7f06bbd015d68106f07a14483a2ec413e",
-      "src_sha": "af61b7f7f06bbd015d68106f07a14483a2ec413e"
+      "dst_sha": "5d4ad10345b97f31cbd65fac389f9560987d4a0b",
+      "src_sha": "5d4ad10345b97f31cbd65fac389f9560987d4a0b"
     },
     "funseries": {
       "dst_sha": "f4c5ae816284fef942d50f41c28b68b189ae082e",
